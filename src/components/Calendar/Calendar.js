@@ -8,9 +8,8 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 const UserPage = (props) => (
   <div>
     <h1 id="welcome">
-      Welcome, { props.user.username }!
+      Welcome, { props.state.user.name }!
     </h1>
-    <p>Your ID is: {props.user.id}</p>
     <LogOutButton className="log-in" />
   </div>
 );
@@ -19,7 +18,7 @@ const UserPage = (props) => (
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({user}) => ({ user });
 const mapStateToProps = state => ({
-  user: state.user,
+  state
 });
 
 // this allows us to use <App /> in index.js

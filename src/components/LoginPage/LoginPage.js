@@ -5,6 +5,7 @@ class LoginPage extends Component {
   state = {
     username: '',
     password: '',
+    name: '',
   };
 
   login = (event) => {
@@ -44,7 +45,7 @@ class LoginPage extends Component {
           <h1>Login</h1>
           <div>
             <label htmlFor="username">
-              Username:
+              Username(email):
               <input
                 type="text"
                 name="username"
@@ -62,6 +63,7 @@ class LoginPage extends Component {
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
               />
+              <p>Password must be at least 6 characters long</p>
             </label>
           </div>
           <div>

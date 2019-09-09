@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
@@ -20,13 +20,27 @@ const Nav = (props) => {
 
   const open = Boolean(anchorEl);
   const ITEM_HEIGHT = 48;
-  let componentList = ['Calendar', 'Leaderboard', 'Camp Log', 'Admin', 'Profile', 'Logout'];
-  let navItem = 
+  let title = props.location.pathname.slice(1);
+
+  let componentList = ['Calendar', 'Leaderboard', 'CampLog', 'Profile'];
+  let navItemList = <>{componentList.map(component => <MenuItem key={component}>
+    <Link className="nav-link" to={'/' + component} onClick={handleClose}>
+      {component}
+    </Link>
+  </MenuItem>
+    )} < MenuItem >
+      <LogOutButton className="nav-link" />
+    </MenuItem> </>
+  let adminItem = <MenuItem>
+    <Link className="nav-link" to="/Admin" onClick={handleClose}>
+      Admin
+            </Link>
+  </MenuItem>;
 
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">{props.user && 'Login'}</h2>
+        <h2 className="nav-title">{props.state.user.id ? title : 'Login/Register'}</h2>
       </Link>
       <div className="nav-right">
         <IconButton
@@ -48,45 +62,10 @@ const Nav = (props) => {
               width: 200,
             },
           }}
-        >
-          <MenuItem >
-            <Link className="nav-link" to="/home">
-              {props.user.id ? 'Calendar' : 'Login / Register'}
-            </Link>
-          </MenuItem>
-          {props.user.id && (
-            <>
-              <Link className="nav-link" to="/info">
-                Info Page
-          </Link> <br />
-              <LogOutButton className="nav-link" />
-            </>
-          )}
-          <MenuItem>
-            <Link className="nav-link" to="/about">
-              About
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link className="nav-link" to="/camplog">
-              Camp Log
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link className="nav-link" to="/leaderboard">
-              Leaderboard
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link className="nav-link" to="/admin">
-              Admin
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link className="nav-link" to="/profile">
-              My Profile
-            </Link>
-          </MenuItem>
+        > {props.state.user.id ? navItemList
+          :
+          <MenuItem className="nav-link" onClick={handleClose}>MeatLocker</MenuItem>}
+          {props.state.user.isAdmin && adminItem}
         </Menu>
       </div>
     </div>
@@ -99,7 +78,7 @@ const Nav = (props) => {
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({ user }) => ({ user });
 const mapStateToProps = state => ({
-  user: state.user,
+  state
 });
 
-export default connect(mapStateToProps)(Nav);
+export default withRouter(connect(mapStateToProps)(Nav));

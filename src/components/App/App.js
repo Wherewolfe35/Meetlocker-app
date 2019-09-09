@@ -14,11 +14,13 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import Calendar from '../Calendar/Calendar';
 import InfoPage from '../InfoPage/InfoPage';
 
 import './App.css';
 import CampLog from '../CampLog/CampLog';
+import Admin from '../Admin/Admin';
+import Leaderboard from '../Leaderboard/Leaderboard';
 
 class App extends Component {
   componentDidMount () {
@@ -32,7 +34,7 @@ class App extends Component {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/Calendar" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
             <Route
@@ -46,8 +48,8 @@ class App extends Component {
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
             <ProtectedRoute
               exact
-              path="/home"
-              component={UserPage}
+              path="/Calendar"
+              component={Calendar}
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
@@ -58,8 +60,23 @@ class App extends Component {
             />
             <ProtectedRoute
               exact
-              path="/camplog"
+              path="/CampLog"
               component={CampLog}
+            />
+            <ProtectedRoute
+              exact
+              path="/nav"
+              component={Nav}
+            />
+            <ProtectedRoute
+              exact
+              path="/Admin"
+              component={Admin}
+            />
+            <ProtectedRoute
+              exact
+              path="/Leaderboard"
+              component={Leaderboard}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

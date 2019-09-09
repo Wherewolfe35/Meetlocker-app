@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import { Button } from "@material-ui/core";
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
 // and then instead of `props.user.username` you could use `user.username`
-const UserPage = (props) => (
-  <div>
-    <h1 id="welcome">
-      Welcome, { props.state.user.name }!
+class Calendar extends Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'GET_EVENTS'
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1 id="welcome">
+          Welcome, {this.props.state.user.name}!
     </h1>
-    <LogOutButton className="log-in" />
-  </div>
-);
+        <h2><u>Calendar of Events</u></h2>
+        <Button variant='contained' color="inherit">Add Event</Button>
+      </div>
+    );
+  }
+}
 
 // Instead of taking everything from state, we just want the user info.
 // if you wanted you could write this code like this:
@@ -22,4 +33,4 @@ const mapStateToProps = state => ({
 });
 
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(UserPage);
+export default connect(mapStateToProps)(Calendar);

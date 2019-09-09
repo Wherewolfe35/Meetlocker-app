@@ -29,15 +29,11 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login">
         {this.props.errors.registrationMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.registrationMessage}
-          </h2>
+          alert(this.props.errors.registrationMessage)
         )}
+        <center className='loginForm'>
         <form onSubmit={this.registerUser}>
           <h1>Register User</h1>
           <div>
@@ -81,7 +77,6 @@ class RegisterPage extends Component {
             />
           </div>
         </form>
-        <center>
           <button
             type="button"
             className="link-button"

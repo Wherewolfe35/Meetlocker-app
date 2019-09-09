@@ -13,7 +13,7 @@ const loginMessage = (state = '', action) => {
     case 'LOGIN_FAILED_NO_CODE':
       return 'Oops! Something went wrong! Is the server running?';
     default:
-      return state;
+      return '';
   }
 };
 
@@ -24,11 +24,11 @@ const registrationMessage = (state = '', action) => {
     case 'CLEAR_REGISTRATION_ERROR':
       return '';
     case 'REGISTRATION_INPUT_ERROR':
-      return 'Choose a username and password! Password must be at least 6 characters';
+      return 'Choose a username, password, and name! Password must be at least 6 characters';
     case 'REGISTRATION_FAILED':
       return 'Oops! That didn\'t work. The username might already be taken. Try again!';
     default:
-      return state;
+      return '';
   }
 };
 

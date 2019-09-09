@@ -5,18 +5,16 @@ class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
+    name: '',
   };
 
   registerUser = (event) => {
     event.preventDefault();
 
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.name && this.state.password.length >= 6) {
       this.props.dispatch({
         type: 'REGISTER',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-        },
+        payload: this.state,
       });
     } else {
       this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
@@ -61,6 +59,16 @@ class RegisterPage extends Component {
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
+              />
+              <p>Password must be at least 6 characters long</p>
+            </label>
+            <label htmlFor="name">
+              Name:
+              <input
+                type="text"
+                placeholder="First and Last"
+                value={this.state.name}
+                onChange={this.handleInputChangeFor('name')}
               />
             </label>
           </div>

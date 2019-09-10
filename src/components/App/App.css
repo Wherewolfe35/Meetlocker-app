@@ -25,7 +25,7 @@ input {
 }
 
 .log-in, .log-out, .register {
-  background-color: rgb(5, 99, 13);
+  background-color: #05630d;
   border-radius: 4px;
   color: #f8f8f8;
   min-height: 50px;
@@ -61,4 +61,10 @@ label p {
     -o-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.backBtn {
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
 }

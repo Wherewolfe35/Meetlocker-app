@@ -65,7 +65,6 @@ const EventForm = (props) => {
         </MuiPickersUtilsProvider>
       </form>
       <button onClick={() => props.history.push('/Calendar')}>Back</button>
-      {JSON.stringify(props)}
     </div>
   )
 }

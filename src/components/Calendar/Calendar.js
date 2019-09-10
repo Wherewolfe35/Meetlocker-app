@@ -12,6 +12,11 @@ class Calendar extends Component {
     })
   }
 
+  deleteEvent = (id) => {
+    console.log(id);
+    this.props.dispatch({type: 'REMOVE_EVENT', payload: id});
+  }
+
   render() {
     return (
       <div>
@@ -20,7 +25,9 @@ class Calendar extends Component {
     </h1>
         <h2><u>Calendar of Events</u></h2>
         <ul>
-          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date}</li>)}
+          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date} 
+          {event.user_id === this.props.state.user.id && <button onClick={()=>this.deleteEvent(event.id)}>Delete</button>}
+            </li>)}
         </ul>
         <Button variant='contained' color="inherit" onClick={()=>this.props.history.push('/EventForm')}>Add Event</Button>
       </div>

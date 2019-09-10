@@ -19,6 +19,9 @@ class Calendar extends Component {
           Welcome, {this.props.state.user.name}!
     </h1>
         <h2><u>Calendar of Events</u></h2>
+        <ul>
+          {this.props.state.events.map(event => <li>{event.title} {event.date}</li>)}
+        </ul>
         <Button variant='contained' color="inherit">Add Event</Button>
       </div>
     );

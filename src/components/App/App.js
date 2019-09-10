@@ -20,6 +20,7 @@ import './App.css';
 import CampLog from '../CampLog/CampLog';
 import Admin from '../Admin/Admin';
 import Leaderboard from '../Leaderboard/Leaderboard';
+import EventForm from "../EventForm/EventForm";
 
 class App extends Component {
   componentDidMount () {
@@ -76,6 +77,11 @@ class App extends Component {
               exact
               path="/Leaderboard"
               component={Leaderboard}
+            />
+            <ProtectedRoute
+              exact
+              path="/EventForm"
+              component={EventForm}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

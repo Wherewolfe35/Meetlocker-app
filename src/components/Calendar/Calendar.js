@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from "@material-ui/core";
 
+import "./Calendar.css";
+
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
 // and then instead of `props.user.username` you could use `user.username`
@@ -14,22 +16,28 @@ class Calendar extends Component {
 
   deleteEvent = (id) => {
     console.log(id);
-    this.props.dispatch({type: 'REMOVE_EVENT', payload: id});
+    this.props.dispatch({ type: 'REMOVE_EVENT', payload: id });
   }
 
   render() {
     return (
       <div>
-        <h1 id="welcome">
-          Welcome, {this.props.state.user.name}!
-    </h1>
+        <header>
+          <h1 id="welcome">
+            Welcome, {this.props.state.user.name}!
+        </h1>
+        </header>
         <h2><u>Calendar of Events</u></h2>
         <ul>
-          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date} 
-          {event.user_id === this.props.state.user.id && <button onClick={()=>this.deleteEvent(event.id)}>Delete</button>}
-            </li>)}
+          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date}
+            {event.user_id === this.props.state.user.id && <button onClick={() => this.deleteEvent(event.id)}>Delete</button>}
+          </li>)}
         </ul>
-        <Button variant='contained' color="inherit" onClick={()=>this.props.history.push('/EventForm')}>Add Event</Button>
+        <div className='eventBtn'>
+        <Button variant='contained' color="secondary"
+          onClick={() => this.props.history.push('/EventForm')}>Add Event
+        </Button>
+        </div>
       </div>
     );
   }

@@ -1,0 +1,23 @@
+header {
+  margin: 5px;
+  padding-left: 5px;
+  border: 1px solid;
+  background-color: rgba(46, 56, 40, 0.226)
+}
+
+body {
+  background-color: rgb(126, 173, 98);
+}
+
+li {
+  padding-bottom: 10px; 
+}
+
+h2 {
+  text-align: center;
+}
+
+.eventBtn {
+  display: flex;
+  justify-content: center;
+}

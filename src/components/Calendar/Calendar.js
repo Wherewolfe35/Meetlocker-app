@@ -20,7 +20,7 @@ class Calendar extends Component {
     </h1>
         <h2><u>Calendar of Events</u></h2>
         <ul>
-          {this.props.state.events.eventList.map(event => <li>{event.title} {event.date}</li>)}
+          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date}</li>)}
         </ul>
         <Button variant='contained' color="inherit" onClick={()=>this.props.history.push('/EventForm')}>Add Event</Button>
       </div>

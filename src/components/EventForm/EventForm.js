@@ -29,14 +29,11 @@ const EventForm = (props) => {
 
   function handleSubmit(event){
     event.preventDefault();
-    props.dispatch({type: 'ADD_EVENT', payload: props.state.events.currentEvent})
-    .then(() => {
-      alert('Thank you for your submission!');
-    });
+    props.dispatch({type: 'ADD_EVENT', payload: props.state.events.currentEvent});
   }
   return (
-    <div>
-      <form onSubmit={()=>handleSubmit()}>
+    <div>{props.state.errors.eventFormMessage && alert(props.state.errors.eventFormMessage)}
+      <form onSubmit={(event)=>handleSubmit(event)}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <input placeholder="title" value={props.state.events.currentEvent.title} onChange={handleTitleChange}></input>

@@ -16,8 +16,17 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   })
 });
 
-router.post('/', (req, res) => {
-
+router.post('/', rejectUnauthenticated, (req, res) => {
+  let event = req.body
+  let queryText = `INSERT INTO "events" ("title", "start_date", "end_date", "user_id") VALUES ($1, $2, $3, $4);`;
+  pool.query(queryText, [event.title, event.startDate, event.endDate, req.user.id])
+  .then(() => {
+    res.sendStatus(201);
+  })
+  .catch((error) => {
+    console.log('error in event POST', error);
+    res.sendStatus(500);
+  })
 });
 
 module.exports = router;

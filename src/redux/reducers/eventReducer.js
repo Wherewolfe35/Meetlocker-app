@@ -12,11 +12,13 @@ const eventList = (state = [], action) => {
 const currentEvent = (state = '', action) => {
   switch (action.type) {
     case 'START_EVENT':
-      return {...state, startDate: action.payload}
+      return {...state, startDate: action.payload};
     case 'END_EVENT':
-      return { ...state, endDate: action.payload }
+      return { ...state, endDate: action.payload };
     case 'EVENT_TITLE':
-      return { ...state, title: action.payload }
+      return { ...state, title: action.payload };
+    case 'EVENT_ADDED':
+      return '';
     default:
       return state;
   }

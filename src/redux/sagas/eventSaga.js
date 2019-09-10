@@ -28,8 +28,14 @@ try{
   yield put({
     type: 'GET_EVENTS'
   });
+  yield put({
+    type: 'EVENT_ADDED'
+  })
 } catch(error) {
   console.log('error in addEvent', error);
+  yield put({
+    type: 'EVENT_ERROR',
+  })
 }
 }
 

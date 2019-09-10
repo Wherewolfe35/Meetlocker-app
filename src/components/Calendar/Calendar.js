@@ -34,7 +34,7 @@ class Calendar extends Component {
           </li>)}
         </ul>
         <div className='eventBtn'>
-        <Button variant='contained' color="secondary"
+        <Button variant='contained' color='secondary'
           onClick={() => this.props.history.push('/EventForm')}>Add Event
         </Button>
         </div>

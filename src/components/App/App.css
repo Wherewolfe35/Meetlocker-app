@@ -62,3 +62,9 @@ label p {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.backBtn {
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
+}

@@ -43,6 +43,7 @@ const CampLog = (props) => {
 
   function submitComment() {
     props.dispatch({ type: 'ADD_COMMENT', payload: props.state.log.currentComment});
+    setComment(false);
   }
 
   return (
@@ -79,7 +80,8 @@ const CampLog = (props) => {
         {props.state.log.logList && props.state.log.logList.map(log =>
           <div key={log.id}>
             <p>{log.post}<span className="logNameDate"> ~{log.name} {log.date}</span></p>
-            {comment && commentId === log.id && <div><TextField
+            {comment && commentId === log.id && 
+            <div><TextField
               id="filled-multiline-flexible"
               label="Comment"
               multiline
@@ -91,8 +93,10 @@ const CampLog = (props) => {
               value={props.state.log.currentComment.text}
             />
               <AddCommentTwoToneIcon fontsize="small" onClick={submitComment} />
-            </div>}
+            </div>
+          }
             <Button size="small" variant="outlined" onClick={() => handleComment(log.id)}>Comment</Button>
+            <span><Button size="small"><u>See Comments()</u></Button></span>
           </div>
         )}
       </ul>

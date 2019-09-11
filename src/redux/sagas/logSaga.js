@@ -47,10 +47,27 @@ function* addComment(action) {
   }
 }
 
+function* getComments(){
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    let response = yield axios.get('/api/log/comment', config);
+    yield put({
+      type: 'SET_COMMENTS',
+      payload: response.data
+    })
+  } catch (error) {
+    console.log('error in getComments', error);
+  }
+}
+
 function* logSaga(){
   yield takeEvery('GET_LOG', getLog);
   yield takeEvery('ADD_LOG', addLog);
-  yield takeEvery('ADD_COMMENT', addComment)
+  yield takeEvery('ADD_COMMENT', addComment);
+  yield takeEvery('GET_COMMENTS', getComments);
 }
 
 export default logSaga;

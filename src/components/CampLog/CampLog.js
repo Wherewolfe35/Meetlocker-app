@@ -29,7 +29,7 @@ const CampLog = (props) => {
   }
 
   function handleSubmit() {
-    props.dispatch({ type: 'ADD_LOG', payload: props.state.log.currentLog });
+    props.dispatch({ type: 'ADD_LOG', payload: props.log });
   }
 
   function handleComment(id) {
@@ -42,8 +42,12 @@ const CampLog = (props) => {
   }
 
   function submitComment() {
-    props.dispatch({ type: 'ADD_COMMENT', payload: props.state.log.currentComment});
+    props.dispatch({ type: 'ADD_COMMENT', payload: props.comment});
     setComment(false);
+  }
+
+  function displayComments(id) {
+    props.dispatch({type: 'GET_COMMENTS', payload: id});
   }
 
   return (
@@ -77,7 +81,7 @@ const CampLog = (props) => {
         </MuiPickersUtilsProvider>
       </form>
       <ul className="logList">
-        {props.state.log.logList && props.state.log.logList.map(log =>
+        {props.logList && props.logList.map(log =>
           <div key={log.id}>
             <p>{log.post}<span className="logNameDate"> ~{log.name} {log.date}</span></p>
             {comment && commentId === log.id && 
@@ -90,13 +94,20 @@ const CampLog = (props) => {
               onChange={commentText}
               margin="dense"
               variant="filled"
-              value={props.state.log.currentComment.text}
+              value={props.comment.text}
             />
               <AddCommentTwoToneIcon fontsize="small" onClick={submitComment} />
             </div>
           }
             <Button size="small" variant="outlined" onClick={() => handleComment(log.id)}>Comment</Button>
-            <span><Button size="small"><u>See Comments()</u></Button></span>
+            <span><Button size="small" onClick={()=>displayComments(log.id)}><u>See Comments</u></Button></span>
+            {props.commentList && props.commentList.map((comment) =>{ 
+              if(comment.logs_id === log.id){
+                return(
+            <div key={comment.id} className="commentList">
+              <p>{comment.comments_post} <span> ~{comment.name}</span></p>
+            </div>)}})
+            }
           </div>
         )}
       </ul>
@@ -106,7 +117,10 @@ const CampLog = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  state,
+  logList: state.log.logList,
+  comment: state.log.currentComment,
+  log: state.log.currentLog,
+  commentList: state.log.commentList,
 });
 
 export default connect(mapStateToProps)(CampLog);

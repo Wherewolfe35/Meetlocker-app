@@ -47,13 +47,13 @@ function* addComment(action) {
   }
 }
 
-function* getComments(){
+function* getComments(action){
   try {
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     };
-    let response = yield axios.get('/api/log/comment', config);
+    let response = yield axios.get(`/api/log/comment/${action.payload}`, config);
     yield put({
       type: 'SET_COMMENTS',
       payload: response.data

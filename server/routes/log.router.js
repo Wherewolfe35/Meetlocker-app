@@ -44,12 +44,13 @@ router.post('/comment', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get('/comment', rejectUnauthenticated, (req, res) => {
+router.get('/comment/:id', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT "comments".id, "comments".comments_post, 
   "comments".logs_id, "comments".users_id, "users"."name" 
   FROM "comments"
-  JOIN "users" on "users".id = "comments".users_id;;`;
-  pool.query(queryText)
+  JOIN "users" on "users".id = "comments".users_id
+  WHERE "logs_id" = $1;`;
+  pool.query(queryText, [req.params.id])
   .then((result) => {
     res.send(result.rows);
   })

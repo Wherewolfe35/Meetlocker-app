@@ -17,8 +17,24 @@ function* getLog(){
   }
 }
 
+function* addLog(action) {
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    yield axios.post('/api/log', action.payload, config);
+    yield put({
+      type: 'GET_LOG'
+    });
+  } catch(error) {
+    console.log('error in addLog', error);
+  }
+}
+
 function* logSaga(){
   yield takeEvery('GET_LOG', getLog);
+  yield takeEvery('ADD_LOG', addLog);
 }
 
 export default logSaga;

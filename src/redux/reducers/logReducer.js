@@ -12,7 +12,9 @@ const logList = (state = [], action) => {
 const currentLog = (state = '', action) => {
   switch (action.type) {
     case 'CURRENT_LOG':
-      return action.payload;
+      return {...state, text:action.payload};
+    case 'LOG_DATE':
+      return {...state, date: action.payload}
     default:
       return state;
   }

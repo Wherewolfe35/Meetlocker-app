@@ -30,4 +30,11 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   });
 });
 
+router.post('/comment', rejectUnauthenticated, (req, res) => {
+  let comment = req.body;
+  const queryText = `INSERT INTO "comments" ("comments_post", "logs_id", "users_id") 
+  VALUES($1, $2, $3) ;`;
+  pool.query(queryText, [comment.text, comment.id, req.user.id])
+})
+
 module.exports = router;

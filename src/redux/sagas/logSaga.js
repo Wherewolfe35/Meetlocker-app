@@ -32,9 +32,25 @@ function* addLog(action) {
   }
 }
 
+function* addComment(action) {
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    yield axios.post('/api/log/comment', action.payload, config);
+    yield put({
+      type: 'GET_LOG'
+    });
+  } catch (error) {
+    console.log('error in addComment', error);
+  }
+}
+
 function* logSaga(){
   yield takeEvery('GET_LOG', getLog);
   yield takeEvery('ADD_LOG', addLog);
+  yield takeEvery('ADD_COMMENT', addComment)
 }
 
 export default logSaga;

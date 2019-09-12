@@ -28,6 +28,7 @@ class LoginPage extends Component {
     this.setState({
       [propertyName]: event.target.value,
     });
+    this.props.dispatch({ type: 'CLEAR_LOGIN_ERROR' });
   }
 
   render() {

@@ -1,0 +1,14 @@
+.logNameDate{
+  font-size: 10px;
+}
+
+.logList {
+  margin-right: 5px;
+  padding-left: 0;
+  margin-left: 10px;
+}
+
+.commentList {
+  margin-left: 10px;
+  font-size: 0.8rem;
+}

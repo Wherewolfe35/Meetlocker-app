@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// worker saga: obtains all events from database and sends it to the reducer
 function* getEvents() {
   console.log('hello from getEvents');
   try {
@@ -17,7 +18,7 @@ function* getEvents() {
     console.log('error in getEvents', error);
   }
 }
-
+// worker saga: sends new event to database, starts new GET request, and clears currentevent reducer. 
 function* addEvent(action) {
   try {
     const config = {
@@ -38,7 +39,7 @@ function* addEvent(action) {
     })
   }
 }
-
+// worker saga: requests selected event to be removed from the database
 function* removeEvent(action) {
   try{
     const config = {
@@ -53,7 +54,7 @@ function* removeEvent(action) {
     console.log('error in removeEvent', error);
   }
 }
-
+// root saga
 function* eventSaga() {
   yield takeLatest('GET_EVENTS', getEvents);
   yield takeLatest('ADD_EVENT', addEvent);

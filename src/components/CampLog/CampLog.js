@@ -5,12 +5,14 @@ import "./CampLog.css";
 import { TextField, Grid, Button } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker, } from '@material-ui/pickers';
-import { AddCommentTwoTone, Edit as EditIcon, DeleteForeverOutlined } from '@material-ui/icons';
+import { AddCommentTwoTone, Edit as EditIcon, DeleteForeverOutlined, Block as BlockIcon } from '@material-ui/icons';
 
 const CampLog = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date('2019-09-11T21:11:54'));
   const [comment, setComment] = React.useState(false);
   const [commentId, setCommentId] = React.useState(0);
+  const [editMode, setEditMode] = React.useState(false);
+  const [editId, setEditId] = React.useState(0);
 
   React.useEffect(() => {
     props.dispatch({ type: 'GET_LOG' });
@@ -26,10 +28,15 @@ const CampLog = (props) => {
   } //keeps track of text within log text field
 
   function handleSubmit() {
-    if (!props.log.text || !props.log.date) {
-      return false;
+    if (editMode) {
+      props.dispatch({ type: 'EDIT_LOG', payload: { id: editId, text: props.log.text } });
+      setEditMode(false);
+    } else {
+      if (!props.log.text || !props.log.date) {
+        return false;
+      }
+      props.dispatch({ type: 'ADD_LOG', payload: props.log });
     }
-    props.dispatch({ type: 'ADD_LOG', payload: props.log });
   } //sends message to saga to POST new log
 
   function handleComment(id) {
@@ -62,12 +69,23 @@ const CampLog = (props) => {
     }
   } // deletes selected comment
 
+  function onEdit(text, id) {
+    props.dispatch({ type: 'CURRENT_LOG', payload: text });
+    setEditMode(true);
+    setEditId(id);
+  }//turns on edit mode
+
+  function offEdit() {
+    props.dispatch({ type: 'CLEAR_LOG' });
+    setEditMode(false);
+  }//turns off edit mode
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
-            <TextField
+            {!editMode ? <> <TextField
               id="filled-multiline-static"
               label="Add Log"
               multiline
@@ -78,18 +96,33 @@ const CampLog = (props) => {
               value={props.log.text}
               onChange={handleNewPost}
             />
-            <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Log Date"
-              format="MM/dd/yyyy"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-            <Button type="submit" variant="contained" color="secondary">Submit Log</Button>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Log Date"
+                format="MM/dd/yyyy"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+              <Button type="submit" variant="contained" color="secondary">Submit Log</Button> </>
+              :
+              <><TextField
+                id="filled-multiline-static"
+                label="Edit Log"
+                multiline
+                fullWidth
+                rows="4"
+                margin="normal"
+                variant="filled"
+                value={props.log.text}
+                onChange={handleNewPost}
+              />
+                <Button type="submit" variant="contained" color="secondary">Submit Edit</Button>
+                <BlockIcon onClick={offEdit} /></>
+            }
           </Grid>
         </MuiPickersUtilsProvider>
       </form>
@@ -102,7 +135,7 @@ const CampLog = (props) => {
               </span>
               {log.user_id === props.userId &&
                 <span>
-                  <EditIcon size="small" /> &nbsp;
+                  <EditIcon size="small" onClick={() => onEdit(log.post, log.id)} /> &nbsp;
                   <DeleteForeverOutlined size="small" onClick={() => { logDelete(log.id, log.user_id) }} />
                 </span>
               }&nbsp;

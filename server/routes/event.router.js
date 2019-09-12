@@ -5,7 +5,7 @@ const router = express.Router();
 
 //gets event list from the database
 router.get('/', rejectUnauthenticated, (req, res) => {
-  let queryText = `SELECT * from "events"`;
+  let queryText = `SELECT * from "events" ORDER BY "start_date";`;
   pool.query(queryText)
   .then((result) => {
     res.send(result.rows);

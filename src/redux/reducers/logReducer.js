@@ -22,30 +22,7 @@ const currentLog = (state = '', action) => {
   }
 }
 
-const currentComment = (state = '', action) => {
-  switch (action.type) {
-    case 'CURRENT_COMMENT':
-      return action.payload;
-    case 'ADD_COMMENT':
-      return ''
-    default:
-      return state;
-  }
-}
-
-const commentList = (state = [], action) => {
-  switch (action.type) {
-    case 'SET_COMMENTS':
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
-
 export default combineReducers({
   currentLog,
   logList,
-  currentComment,
-  commentList,
 });

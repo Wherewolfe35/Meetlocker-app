@@ -44,7 +44,7 @@ const CampLog = (props) => {
   function submitComment() {
     props.dispatch({ type: 'ADD_COMMENT', payload: props.comment });
     setComment(false);
-  }//sends message to saga to POST new comment and closes text field
+  } //sends message to saga to POST new comment and closes text field
 
   function displayComments(id) {
     props.dispatch({ type: 'GET_COMMENTS', payload: id });
@@ -52,9 +52,15 @@ const CampLog = (props) => {
 
   function logDelete(id, userId) {
     if (window.confirm('Would you like to delete this from the log book?')) {
-      props.dispatch({ type: 'REMOVE_LOG', payload: {id, userId} })
+      props.dispatch({ type: 'REMOVE_LOG', payload: { id, userId } })
     }
   } // deletes selected log
+
+  function commentDelete(id, userId) {
+    if (window.confirm('Would you like to delete this comment?')) {
+      props.dispatch({ type: 'REMOVE_COMMENT', payload: { id, userId } })
+    }
+  } // deletes selected comment
 
   return (
     <>
@@ -133,7 +139,12 @@ const CampLog = (props) => {
                       <span>
                         ~{comment.name}
                         {comment.users_id === props.userId &&
-                          <DeleteForeverOutlined size="small" />
+                          <DeleteForeverOutlined size="small" onClick={() => { commentDelete(comment.id, comment.users_id) }} />
+                        }
+                        {props.admin && comment.users_id !== props.userId &&
+                          <span>
+                            <DeleteForeverOutlined size="small" onClick={() => { commentDelete(comment.id, comment.users_id) }} />
+                          </span>
                         }
                       </span>
                     </p>
@@ -150,9 +161,9 @@ const CampLog = (props) => {
 
 const mapStateToProps = (state) => ({
   logList: state.log.logList,
-  comment: state.log.currentComment,
+  comment: state.comment.currentComment,
   log: state.log.currentLog,
-  commentList: state.log.commentList,
+  commentList: state.comment.commentList,
   userId: state.user.id,
   admin: state.user.isAdmin
 });

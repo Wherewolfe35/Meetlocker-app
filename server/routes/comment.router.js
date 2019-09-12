@@ -32,4 +32,17 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete('/:id/:userId', rejectUnauthenticated, (req, res) => {
+  if (req.user.id === req.params.userId || req.user.isAdmin) {
+  const queryText = `DELETE FROM "comments" WHERE "id" = $1;`;
+  pool.query(queryText, [req.params.id])
+  .then(() => {
+    res.sendStatus(200);
+  })
+  .catch((error) => {
+    console.log('error in comment DELETE', error);
+  });
+  }
+});
+
 module.exports = router;

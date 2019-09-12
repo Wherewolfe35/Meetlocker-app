@@ -32,9 +32,20 @@ function* getComments(action) {
   }
 }
 
+function* removeComment(action) {
+  try {
+    const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true, };
+    yield axios.delete(`/api/comment/${action.payload.id}/${action.payload.userId}`, config);
+    yield put({ type: 'GET_COMMENTS', payload: action.payload.id })
+  } catch (error) {
+    console.log('error in deleteComment', error);
+  }
+}
+
 function* commentSaga(){
   yield takeEvery('ADD_COMMENT', addComment);
   yield takeEvery('GET_COMMENTS', getComments);
+  yield takeEvery('REMOVE_COMMENT', removeComment);
 }
 
 export default commentSaga

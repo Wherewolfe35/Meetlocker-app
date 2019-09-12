@@ -8,10 +8,7 @@ function* getLog(){
       withCredentials: true,
     };
     let response = yield axios.get('/api/log', config);
-    yield put({
-      type: 'SET_LOG',
-      payload: response.data
-    })
+    yield put({ type: 'SET_LOG', payload: response.data });
   } catch (error) {
     console.log('error in getLog', error);
   }
@@ -24,50 +21,27 @@ function* addLog(action) {
       withCredentials: true,
     };
     yield axios.post('/api/log', action.payload, config);
-    yield put({
-      type: 'GET_LOG'
-    });
+    yield put({ type: 'GET_LOG' });
+    yield put({ type: 'CLEAR_LOG' });
   } catch(error) {
     console.log('error in addLog', error);
   }
 }
 
-function* addComment(action) {
+function* deleteLog(action){
   try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
-    yield axios.post('/api/log/comment', action.payload, config);
-    yield put({
-      type: 'GET_LOG'
-    });
+    const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true, };
+    yield axios.delete(`/api/log/${action.payload.id}/${action.payload.userId}`, config);
+    yield put({type: 'GET_LOG'})
   } catch (error) {
-    console.log('error in addComment', error);
-  }
-}
-
-function* getComments(action){
-  try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
-    let response = yield axios.get(`/api/log/comment/${action.payload}`, config);
-    yield put({
-      type: 'SET_COMMENTS',
-      payload: response.data
-    })
-  } catch (error) {
-    console.log('error in getComments', error);
+    console.log('error in deleteLog', error);    
   }
 }
 
 function* logSaga(){
   yield takeEvery('GET_LOG', getLog);
   yield takeEvery('ADD_LOG', addLog);
-  yield takeEvery('ADD_COMMENT', addComment);
-  yield takeEvery('GET_COMMENTS', getComments);
+  yield takeEvery('REMOVE_LOG', deleteLog);
 }
 
 export default logSaga;

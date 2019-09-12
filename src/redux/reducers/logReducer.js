@@ -15,6 +15,8 @@ const currentLog = (state = '', action) => {
       return {...state, text:action.payload};
     case 'LOG_DATE':
       return {...state, date: action.payload}
+    case 'CLEAR_LOG':
+      return {text: '', date: ''};
     default:
       return state;
   }

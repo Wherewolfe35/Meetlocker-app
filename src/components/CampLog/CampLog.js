@@ -26,6 +26,9 @@ const CampLog = (props) => {
   } //keeps track of text within log text field
 
   function handleSubmit() {
+    if (!props.log.text || !props.log.date) {
+      return false;
+    }
     props.dispatch({ type: 'ADD_LOG', payload: props.log });
   } //sends message to saga to POST new log
 
@@ -47,6 +50,12 @@ const CampLog = (props) => {
     props.dispatch({ type: 'GET_COMMENTS', payload: id });
   } //shows comment list for selected log
 
+  function logDelete(id, userId) {
+    if (window.confirm('Would you like to delete this from the log book?')) {
+      props.dispatch({ type: 'REMOVE_LOG', payload: {id, userId} })
+    }
+  } // deletes selected log
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -60,12 +69,13 @@ const CampLog = (props) => {
               rows="4"
               margin="normal"
               variant="filled"
+              value={props.log.text}
               onChange={handleNewPost}
             />
             <KeyboardDatePicker
               margin="normal"
               id="date-picker-dialog"
-              label="Start Date"
+              label="Log Date"
               format="MM/dd/yyyy"
               value={selectedDate}
               onChange={handleDateChange}
@@ -81,12 +91,19 @@ const CampLog = (props) => {
         {props.logList && props.logList.map(log =>
           <div key={log.id}>
             <p>{log.post}
-              <span className="logNameDate"> ~{log.name} {log.date}</span>
-              {log.user_id === props.userId && <span>
-                <EditIcon size="small" /> &nbsp;
-                <DeleteForeverOutlined size="small" />
+              <span className="logNameDate">
+                ~{log.name} {log.date}
               </span>
-              }
+              {log.user_id === props.userId &&
+                <span>
+                  <EditIcon size="small" /> &nbsp;
+                  <DeleteForeverOutlined size="small" onClick={() => { logDelete(log.id, log.user_id) }} />
+                </span>
+              }&nbsp;
+                {props.admin && log.user_id !== props.userId &&
+                <span>
+                  <DeleteForeverOutlined size="small" onClick={() => { logDelete(log.id, log.user_id) }} />
+                </span>}
             </p>
             {comment && commentId === log.id &&
               <div><TextField
@@ -104,21 +121,25 @@ const CampLog = (props) => {
               </div>
             }
             <Button size="small" variant="outlined" onClick={() => handleComment(log.id)}>Comment</Button>
-            <span><Button size="small" onClick={() => displayComments(log.id)}><u>See Comments</u></Button></span>
+            <span>
+              <Button size="small" onClick={() => displayComments(log.id)}><u>See Comments</u></Button>
+            </span>
             {props.commentList && props.commentList.map((comment) => {
               if (comment.logs_id === log.id) {
                 return (
                   <div key={comment.id} className="commentList">
-                    <p>{comment.comments_post} <span> ~{comment.name} 
-                    {comment.users_id === props.userId &&
-                        <DeleteForeverOutlined size="small" />
-                    }
-                    </span>
+                    <p>
+                      {comment.comments_post}
+                      <span>
+                        ~{comment.name}
+                        {comment.users_id === props.userId &&
+                          <DeleteForeverOutlined size="small" />
+                        }
+                      </span>
                     </p>
                   </div>)
               }
-            })
-            }
+            })}
           </div>
         )}
       </ul>
@@ -132,7 +153,8 @@ const mapStateToProps = (state) => ({
   comment: state.log.currentComment,
   log: state.log.currentLog,
   commentList: state.log.commentList,
-  userId: state.user.id
+  userId: state.user.id,
+  admin: state.user.isAdmin
 });
 
 export default connect(mapStateToProps)(CampLog);

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+//stores text from new comment on the CampLog, clears upon comment being added to database
 const currentComment = (state = '', action) => {
   switch (action.type) {
     case 'CURRENT_COMMENT':
@@ -10,7 +11,7 @@ const currentComment = (state = '', action) => {
       return state;
   }
 }
-
+// stores list of comments for one particular log from the database
 const commentList = (state = [], action) => {
   switch (action.type) {
     case 'SET_COMMENTS':

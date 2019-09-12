@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+//stores list of events from the database
 const eventList = (state = [], action) => {
   switch (action.type) {
     case 'SET_EVENTS':
@@ -8,7 +9,7 @@ const eventList = (state = [], action) => {
       return state;
   }
 }
-
+//stores text, start date, and end date for a new event, clears when new event is added to database
 const currentEvent = (state = '', action) => {
   switch (action.type) {
     case 'START_EVENT':

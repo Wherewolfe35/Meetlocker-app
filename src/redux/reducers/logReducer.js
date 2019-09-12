@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+//stores logs from the database
 const logList = (state = [], action) => {
   switch (action.type) {
     case 'SET_LOG':
@@ -8,7 +9,7 @@ const logList = (state = [], action) => {
       return state;
   }
 }
-
+//stores new log text and date from the campLog component
 const currentLog = (state = '', action) => {
   switch (action.type) {
     case 'CURRENT_LOG':

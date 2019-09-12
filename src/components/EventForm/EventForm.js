@@ -13,20 +13,21 @@ const EventForm = (props) => {
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date('2019-09-10T21:11:54'));
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date('2019-09-11T21:11:54'));
 
+  //sets start date
   function handleDateChange(date, event) {
     setSelectedStartDate(date);
     props.dispatch({ type: 'START_EVENT', payload: event });
   }
-
+  //sets end date
   function handleEndDateChange(date, event) {
     setSelectedEndDate(date);
     props.dispatch({ type: 'END_EVENT', payload: event });
   }
-
+  //keeps track of changes in event title text field
   function handleTitleChange(event) {
     props.dispatch({ type: 'EVENT_TITLE', payload: event.target.value })
   }
-
+  //request to add event to database if all fields are filled out
   function handleSubmit(event) {
     event.preventDefault();
     if(props.events.title && props.events.startDate && props.events.endDate){

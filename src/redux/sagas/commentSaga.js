@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
+// worker saga: will request to add comment data to the database
 function* addComment(action) {
   try {
     const config = {
@@ -15,7 +16,7 @@ function* addComment(action) {
     console.log('error in addComment', error);
   }
 }
-
+// worker saga: will request to obtain comments for specified log from the database, then send results to the reducer
 function* getComments(action) {
   try {
     const config = {
@@ -31,7 +32,7 @@ function* getComments(action) {
     console.log('error in getComments', error);
   }
 }
-
+// worker saga: will request to remove selected comment from the database
 function* removeComment(action) {
   try {
     const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true, };
@@ -41,7 +42,7 @@ function* removeComment(action) {
     console.log('error in deleteComment', error);
   }
 }
-
+// root saga
 function* commentSaga(){
   yield takeEvery('ADD_COMMENT', addComment);
   yield takeEvery('GET_COMMENTS', getComments);

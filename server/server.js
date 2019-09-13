@@ -13,6 +13,7 @@ const userRouter = require('./routes/user.router');
 const eventRouter = require('./routes/event.router');
 const logRouter = require('./routes/log.router');
 const commentRouter = require('./routes/comment.router');
+const leaderboardRouter = require('./routes/leaderboard.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/log', logRouter);
 app.use('/api/comment', commentRouter);
+app.use('/api/leaderboard', leaderboardRouter);
 
 // Serve static files
 app.use(express.static('build'));

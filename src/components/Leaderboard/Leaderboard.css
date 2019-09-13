@@ -15,7 +15,14 @@ td, th {
 .headColumn {
   position: absolute;
   width: 30%;
-  left:0;
+  left: 0;
   margin-left: 2px;
   border-right-width: 0px;
+}
+
+.addAnimalBtn {
+  display: flex;
+  position: fixed;
+  bottom: 5px;
+  margin-left: 35%;
 }

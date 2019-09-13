@@ -1,0 +1,28 @@
+.leaderboard {
+  width: 70%;
+  overflow-x: scroll;
+  margin-left: 30%;
+  padding-bottom: 5px;
+}
+
+td, th {
+  margin: 0;
+  border: 1px solid black;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.headColumn {
+  position: absolute;
+  width: 30%;
+  left: 0;
+  margin-left: 2px;
+  border-right-width: 0px;
+}
+
+.addAnimalBtn {
+  display: flex;
+  position: fixed;
+  bottom: 5px;
+  margin-left: 35%;
+}

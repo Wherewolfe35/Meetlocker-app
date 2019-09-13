@@ -41,7 +41,6 @@ function* deleteLog(action) {
 //worker saga: send new log text to database for updating
 function* editLog(action) {
   try {
-    const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true, };
     yield axios.put(`/api/log/${action.payload.id}`, { text: action.payload.text });
     yield put({ type: 'GET_LOG' });
   } catch (error) {

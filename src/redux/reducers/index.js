@@ -5,6 +5,7 @@ import user from './userReducer';
 import events from "./eventReducer";
 import log from "./logReducer";
 import comment from "./commentReducer"
+import leaderboard from "./leaderboardReducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,8 +18,9 @@ const rootReducer = combineReducers({
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
   user, // will have an id and username if someone is logged in
   events, //contains calendar list of events
-  log, // will have a list of all logs as well as the current log
-  comment,
+  log, // contains a list of all logs as well as the current log
+  comment, // contains the comments for a specific log as well as a new comment
+  leaderboard, //contains the animals data for all users
 });
 
 export default rootReducer;

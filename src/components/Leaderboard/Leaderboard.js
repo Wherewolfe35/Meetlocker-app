@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import LeaderboardUserRow from "../LeaderboardUserRow/LeaderboardUserRow";
+import "./Leaderboard.css";
 
 class Leaderboard extends Component {
 
@@ -9,22 +10,26 @@ class Leaderboard extends Component {
     this.props.dispatch({ type: 'GET_ANIMALS' });
   }
 
-  userKeys = (blah) => {
-    if (blah) {
-      return Object.keys(blah);
+  userKeys = (keyArray) => {
+    if (keyArray) {
+      return Object.keys(keyArray);
     }
   }
 
   render() {
     let keys = this.userKeys(this.props.users[0]);
     return (
-      <div>
-        <table className="leaderboard">
+      <div className="leaderboard">
+        <table>
           <thead>
             <tr>
-              {keys && keys.map((key) => {
+              {keys && keys.map((key, i) => {
                 if (key !== 'bagged') {
+                  if(i === 0){
+                    return <th key={key} className="headColumn">{key}</th>
+                  } else{
                   return (<th key={key}>{key}</th>)
+                  }
                 }
               })
               }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './LeaderboardUserRow.css';
 
 const LeaderboardUserRow = (props) => {
 
@@ -14,7 +15,7 @@ const LeaderboardUserRow = (props) => {
 
   return (
     <tr key={props.user.Name}>
-      <td>{props.user.Name}</td>
+      <td className="headColumn">{props.user.Name}</td>
       <td>{props.user['Total Buck Score']}</td>
       <td>{props.user['Total Points']}</td>
       <td>{props.user['Total Kills']}</td>

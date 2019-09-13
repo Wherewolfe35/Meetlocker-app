@@ -33,10 +33,17 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 router.delete('/:id/:userId', rejectUnauthenticated, (req, res) => {
   if (req.user.id === req.params.userId || req.user.isAdmin) {
-    const queryText = `DELETE FROM "logs" WHERE "id" = $1`;
+    const queryText = `DELETE FROM "comments" WHERE "logs_id" = $1;`
     pool.query(queryText, [req.params.id])
       .then(() => {
-        res.sendStatus(200);
+        const queryText2 = `DELETE FROM "logs" WHERE "id" = $1;`;
+        pool.query(queryText2, [req.params.id])
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          console.log('error in log2 DELETE', error);
+        });
       })
       .catch((error) => {
         console.log('error in log DELETE', error);

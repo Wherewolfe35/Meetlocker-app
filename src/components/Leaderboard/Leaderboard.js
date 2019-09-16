@@ -45,7 +45,7 @@ class Leaderboard extends Component {
           </table>
         </div>
         <div className="addAnimalBtn">
-          <Button variant="contained" color="secondary"> Add Animal </Button>
+          <Button variant="contained" color="secondary" onClick={()=>this.props.history.push('/AddAnimal')}> Add Animal </Button>
         </div>
       </div>
     );

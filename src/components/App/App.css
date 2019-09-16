@@ -68,3 +68,8 @@ label p {
     justify-content: center;
     align-content: flex-end;
 }
+
+.pointMeasurements {
+    max-width: 100px;
+    display: block;
+}

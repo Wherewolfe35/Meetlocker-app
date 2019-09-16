@@ -15,7 +15,7 @@ const LeaderboardUserRow = (props) => {
   return (
     <tr key={props.user.Name}>
       <td className="headColumn">{props.user.Name}</td>
-      <td>{props.user['Total Buck Score']}</td>
+      <td>{Number(props.user['Total Buck Score'])}</td>
       <td>{props.user['Total Points']}</td>
       <td>{props.user['Total Kills']}</td>
       <td>{props.user['Total Weight']}</td>

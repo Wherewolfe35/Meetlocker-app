@@ -14,6 +14,7 @@ const eventRouter = require('./routes/event.router');
 const logRouter = require('./routes/log.router');
 const commentRouter = require('./routes/comment.router');
 const leaderboardRouter = require('./routes/leaderboard.router');
+const animalRouter = require('./routes/animal.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -32,6 +33,7 @@ app.use('/api/event', eventRouter);
 app.use('/api/log', logRouter);
 app.use('/api/comment', commentRouter);
 app.use('/api/leaderboard', leaderboardRouter);
+app.use('/api/animal', animalRouter);
 
 // Serve static files
 app.use(express.static('build'));

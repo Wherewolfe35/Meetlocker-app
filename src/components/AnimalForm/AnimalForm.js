@@ -9,14 +9,14 @@ class AnimalForm extends Component {
       id: '',
       weight: '',
       points: '',
-      score: ''
+      score: 0
     },
     measurements: {
-      leftBaseCirc: 0,
-      rightBaseCirc: 0,
-      insideSpread: 0,
-      leftPoints: 0,
-      rightPoints: 0,
+      leftBaseCirc: '',
+      rightBaseCirc: '',
+      insideSpread: '',
+      leftPoints: '',
+      rightPoints: '',
     },
   }
 
@@ -66,8 +66,8 @@ class AnimalForm extends Component {
   handleNameChange = (event, propertyName, name) => {
     let animalList = this.props.state.leaderboard.animalList;
     function findName(id) {
-      for (const animal of animalList) {
-        if (id == animal.id) {
+      for (let animal of animalList) {
+        if (+(id) === animal.id) {
           return animal.name
         }
       }
@@ -97,7 +97,7 @@ class AnimalForm extends Component {
         alert('Thank you for your submission, an Admin will review your hunt before officially being accepted to the leaderboard');
         this.props.dispatch({ type: 'ADD_ANIMAL', payload: this.state.newAnimal });
         this.setState({
-          newAnimal: { id: '', weight: '', points: '', score: ''},
+          newAnimal: { id: this.state.newAnimal.id, weight: '', points: '', score: ''},
           measurements: { leftBaseCirc: 0, rightBaseCirc: 0, insideSpread: 0, leftPoints: 0, rightPoints: 0,},
         })
       }
@@ -174,7 +174,7 @@ class AnimalForm extends Component {
           onChange={(event) => this.handleScoreChange(event, 'leftPoints')} 
           value={this.state.measurements.leftPoints} />
         {this.state.measurements.leftPoints > 0 && leftMeasurements.map(point => <>{point}</>)}
-        {this.state.newAnimal.score && <p>Score: {this.state.newAnimal.score}</p>}
+        {this.state.newAnimal.score > 0 && <p>Score: {this.state.newAnimal.score}</p>}
         <Button onClick={this.calcScore} variant="contained" color="secondary">
           Calculate Score
           </Button> <br /> <br />

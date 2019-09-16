@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import { FormControl, InputLabel, Select, TextField, Button } from '@material-ui/core';
+import { FormControl, InputLabel, Select, TextField, Button, InputAdornment } from '@material-ui/core';
 
 class AnimalForm extends Component {
   state = {
@@ -52,10 +52,6 @@ class AnimalForm extends Component {
     return pointArray;
   }
 
-  handleScoreChange = (event, propertyName) => {
-    this.setState({ ...this.state, measurements: { ...this.state.measurements, [propertyName]: event.target.value } })
-  }
-
   // React.useEffect(function pointInputs() {
   //   for (let i = 0; i < scoreCalculator.leftPoints; i++) {
   //     left = [...left, i]
@@ -63,8 +59,49 @@ class AnimalForm extends Component {
   //   return left;
   // }, [scoreCalculator.leftPoints]);
 
-  handleNameChange = (event, propertyName) => {
-    this.setState({ ...this.state, newAnimal: { ...this.state.newAnimal, [propertyName]: event.target.value } })
+  handleScoreChange = (event, propertyName) => {
+    this.setState({ ...this.state, measurements: { ...this.state.measurements, [propertyName]: event.target.value } });
+  }
+
+  handleNameChange = (event, propertyName, name) => {
+    let animalList = this.props.state.leaderboard.animalList;
+    function findName(id) {
+      for (const animal of animalList) {
+        if (id == animal.id) {
+          return animal.name
+        }
+      }
+    }
+    let animalName = findName(event.target.value);
+    if(name){
+      this.setState({ ...this.state, newAnimal: { ...this.state.newAnimal, [propertyName]: event.target.value }, animalName });
+    } else {
+      this.setState({ ...this.state, newAnimal: { ...this.state.newAnimal, [propertyName]: event.target.value }});
+    }
+  }
+
+  animalSubmit = () => {
+    if (!this.state.newAnimal.score && this.state.newAnimal.id === '1') {
+      alert('Please submit a score for your Buck!');
+    } else if (!this.state.newAnimal.id) {
+      alert('Please select an animal.');
+    } else if(+(this.state.newAnimal.weight) > 600){
+      alert(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
+    } else if (+(this.state.newAnimal.points) > 39) {
+      alert(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
+    } else {
+      if (window.confirm(`Are you sure all of this data is correct? \n Name: ${this.state.animalName} 
+      Weight: ${this.state.newAnimal.weight} lbs 
+      Points: ${this.state.newAnimal.points} 
+      Score: ${this.state.newAnimal.score}`)) {
+        alert('Thank you for your submission, an Admin will review your hunt before officially being accepted to the leaderboard');
+        this.props.dispatch({ type: 'ADD_ANIMAL', payload: this.state.newAnimal });
+        this.setState({
+          newAnimal: { id: '', weight: '', points: '', score: ''},
+          measurements: { leftBaseCirc: 0, rightBaseCirc: 0, insideSpread: 0, leftPoints: 0, rightPoints: 0,},
+        })
+      }
+    }
   }
 
   calcScore = () => {
@@ -101,7 +138,7 @@ class AnimalForm extends Component {
         <InputLabel htmlFor="age-native-simple">Animal</InputLabel>
         <Select
           native
-          onChange={(event) => this.handleNameChange(event, 'id')}
+          onChange={(event) => this.handleNameChange(event, 'id', true)}
           inputProps={{
             name: 'Animal',
             id: 'age-native-simple',
@@ -112,27 +149,37 @@ class AnimalForm extends Component {
         </Select>
       </FormControl>
       <TextField variant="filled" margin="dense" label="Weight" type="number"
+        InputProps={{
+          endAdornment: <InputAdornment position="end">Lbs</InputAdornment>,
+        }} value={this.state.newAnimal.weight}
         onChange={(event) => this.handleNameChange(event, 'weight')} />
       {this.state.newAnimal.id === '1' && <>
         <TextField variant="filled" margin="dense" label="Points" type="number"
-          onChange={(event) => this.handleNameChange(event, 'points')} />
+          onChange={(event) => this.handleNameChange(event, 'points')} 
+          value={this.state.newAnimal.points} />
         <TextField variant="filled" margin="dense" label="insideSpread" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'insideSpread')} />
+          onChange={(event) => this.handleScoreChange(event, 'insideSpread')} 
+          value={this.state.measurements.insideSpread} />
         <TextField variant="filled" margin="dense" label="Right Base Circumference" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'rightBaseCirc')} />
+          onChange={(event) => this.handleScoreChange(event, 'rightBaseCirc')} 
+          value={this.state.measurements.rightBaseCirc} />
         <TextField variant="filled" margin="dense" label="Left Base Circumference" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'leftBaseCirc')} />
+          onChange={(event) => this.handleScoreChange(event, 'leftBaseCirc')} 
+          value={this.state.measurements.leftBaseCirc} />
         <TextField variant="filled" margin="dense" label="Right Points" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'rightPoints')} />
+          onChange={(event) => this.handleScoreChange(event, 'rightPoints')} 
+          value={this.state.measurements.rightPoints} />
         {this.state.measurements.rightPoints > 0 && rightMeasurements.map(point => <>{point}</>)}
         <TextField variant="filled" margin="dense" label="Left Points" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'leftPoints')} />
+          onChange={(event) => this.handleScoreChange(event, 'leftPoints')} 
+          value={this.state.measurements.leftPoints} />
         {this.state.measurements.leftPoints > 0 && leftMeasurements.map(point => <>{point}</>)}
         {this.state.newAnimal.score && <p>Score: {this.state.newAnimal.score}</p>}
         <Button onClick={this.calcScore} variant="contained" color="secondary">
           Calculate Score
-          </Button>
+          </Button> <br /> <br />
       </>}
+      <Button variant="contained" color="secondary" onClick={this.animalSubmit}>Submit Animal</Button>
     </div>
     )
   }

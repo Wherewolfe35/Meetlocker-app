@@ -6,7 +6,6 @@ import events from "./eventReducer";
 import log from "./logReducer";
 import comment from "./commentReducer"
 import leaderboard from "./leaderboardReducer";
-import animal from "./animalReducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -22,7 +21,6 @@ const rootReducer = combineReducers({
   log, // contains a list of all logs as well as the current log
   comment, // contains the comments for a specific log as well as a new comment
   leaderboard, //contains the animals data for all users
-  animal, //contains measurements for animals being added
 });
 
 export default rootReducer;

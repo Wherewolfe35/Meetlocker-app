@@ -14,6 +14,7 @@ class AnimalForm extends Component {
     measurements: {
       leftBaseCirc: 0,
       rightBaseCirc: 0,
+      insideSpread: 0,
       leftPoints: 0,
       rightPoints: 0,
     },
@@ -67,7 +68,26 @@ class AnimalForm extends Component {
   }
 
   calcScore = () => {
-    
+    let meas = this.state.measurements;
+    function rMeas() {
+      let rightMeas = 0
+      for (let i = 1; i <= meas.rightPoints; i++) {
+        rightMeas += (+(meas.rightBaseCirc) * meas[`rightPoint${i}`])
+      }
+      return rightMeas
+    }
+    function lMeas() {
+      let leftMeas = 0
+      for (let i = 1; i <= meas.rightPoints; i++) {
+        leftMeas += (+(meas.leftBaseCirc) * meas[`leftPoint${i}`])
+      }
+      return leftMeas
+    }
+    let rightMeas = rMeas();
+    let leftMeas = lMeas();
+    console.log(rightMeas, leftMeas);
+    let wolfeScore = +(this.state.newAnimal.points) + +(meas.insideSpread) + +(rightMeas.toFixed(4)) + +(leftMeas.toFixed(4));
+    this.setState({ ...this.state, newAnimal: { ...this.state.newAnimal, score: wolfeScore } })
   }
 
   render() {
@@ -77,7 +97,7 @@ class AnimalForm extends Component {
 
     return (<div>
       {JSON.stringify(this.state)}
-      <FormControl >
+      <FormControl required>
         <InputLabel htmlFor="age-native-simple">Animal</InputLabel>
         <Select
           native
@@ -90,25 +110,29 @@ class AnimalForm extends Component {
           <option value="" />
           {this.props.state.leaderboard.animalList.map(animal => <option value={animal.id}>{animal.name}</option>)}
         </Select>
-      
+      </FormControl>
       <TextField variant="filled" margin="dense" label="Weight" type="number"
         onChange={(event) => this.handleNameChange(event, 'weight')} />
       {this.state.newAnimal.id === '1' && <>
         <TextField variant="filled" margin="dense" label="Points" type="number"
           onChange={(event) => this.handleNameChange(event, 'points')} />
+        <TextField variant="filled" margin="dense" label="insideSpread" type="number"
+          onChange={(event) => this.handleScoreChange(event, 'insideSpread')} />
+        <TextField variant="filled" margin="dense" label="Right Base Circumference" type="number"
+          onChange={(event) => this.handleScoreChange(event, 'rightBaseCirc')} />
+        <TextField variant="filled" margin="dense" label="Left Base Circumference" type="number"
+          onChange={(event) => this.handleScoreChange(event, 'leftBaseCirc')} />
         <TextField variant="filled" margin="dense" label="Right Points" type="number"
           onChange={(event) => this.handleScoreChange(event, 'rightPoints')} />
         {this.state.measurements.rightPoints > 0 && rightMeasurements.map(point => <>{point}</>)}
         <TextField variant="filled" margin="dense" label="Left Points" type="number"
           onChange={(event) => this.handleScoreChange(event, 'leftPoints')} />
         {this.state.measurements.leftPoints > 0 && leftMeasurements.map(point => <>{point}</>)}
-        <TextField variant="filled" margin="dense" label="Right Base Circumference" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'rightBaseCirc')} />
-        <TextField variant="filled" margin="dense" label="Left Base Circumference" type="number"
-          onChange={(event) => this.handleScoreChange(event, 'leftBaseCirc')} />
-        <Button onClick={this.calcScore}>Calculate Score</Button>
+        {this.state.newAnimal.score && <p>Score: {this.state.newAnimal.score}</p>}
+        <Button onClick={this.calcScore} variant="contained" color="secondary">
+          Calculate Score
+          </Button>
       </>}
-      </FormControl>
     </div>
     )
   }

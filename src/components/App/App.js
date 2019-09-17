@@ -25,10 +25,11 @@ import AnimalForm from '../AnimalForm/AnimalForm';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#05630d'
+      main: '#05630d',
     },
     secondary: {
-      main: '#FF6700'
+      main: '#FF6700',
+      dark: '#c62828'
     },
   }
 })

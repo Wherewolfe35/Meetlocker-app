@@ -27,7 +27,7 @@ class Leaderboard extends Component {
             <thead>
               <tr>
                 {keys && keys.map((key, i) => {
-                  if (key !== 'bagged') {
+                  if (key !== 'Bagged') {
                     if (i === 0) {
                       return <th key={key} className="headColumn">{key}</th>
                     } else {

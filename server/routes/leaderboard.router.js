@@ -10,8 +10,9 @@ COALESCE(sum("trophies".points), 0) AS "Total Points", COALESCE(count("trophies"
 COALESCE(sum("trophies".weight), 0) AS "Total Weight", array_agg("animals".id) AS "Bagged" FROM "trophies"
 FULL OUTER JOIN "users" ON "trophies".user_id = "users".id
 LEFT JOIN "animals" ON "animals".id = "trophies".animals_id
-WHERE "trophies".is_approved OR "users".is_approved
-GROUP BY "users"."name";`;
+WHERE "trophies".is_approved
+GROUP BY "users"."name"
+ORDER BY "Total Buck Score" desc;`;
   pool.query(queryText)
     .then((result) => {
       res.send(result.rows);

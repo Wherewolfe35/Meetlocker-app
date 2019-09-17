@@ -133,7 +133,6 @@ class AnimalForm extends Component {
 
 
     return (<div>
-      {JSON.stringify(this.state)}
       <FormControl required>
         <InputLabel htmlFor="age-native-simple">Animal</InputLabel>
         <Select

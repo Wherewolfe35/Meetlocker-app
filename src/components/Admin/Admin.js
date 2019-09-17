@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 
 class Admin extends Component {
   state = {  }
+
+  componentDidMount() {
+    this.props.dispatch({type: 'GET_UNAPPROVED'});
+  }
+
   render() { 
     return ( 
       <div>
@@ -10,5 +16,10 @@ class Admin extends Component {
      );
   }
 }
+
+const mapStateToProps = (state) => ({
+users: state.admin.userList,
+trophies: state.admin.trophyList
+})
  
-export default Admin;
+export default connect(mapStateToProps)(Admin);

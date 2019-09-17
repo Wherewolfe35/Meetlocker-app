@@ -1,4 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 //workerSaga: accepts data on new animal and sends it to the database

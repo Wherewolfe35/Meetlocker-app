@@ -15,6 +15,7 @@ const logRouter = require('./routes/log.router');
 const commentRouter = require('./routes/comment.router');
 const leaderboardRouter = require('./routes/leaderboard.router');
 const animalRouter = require('./routes/animal.router');
+const adminRouter = require('./routes/admin.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -34,6 +35,7 @@ app.use('/api/log', logRouter);
 app.use('/api/comment', commentRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/animal', animalRouter);
+app.use('/api/admin', adminRouter);
 
 // Serve static files
 app.use(express.static('build'));

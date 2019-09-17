@@ -4,7 +4,7 @@ const LeaderboardUserRow = (props) => {
 
   function bagCounter(bagId) {
     let counter = 0
-    props.user.bagged.forEach(element => {
+    props.user.Bagged.forEach(element => {
       if(element === bagId){
         counter++
       }

@@ -38,20 +38,22 @@ class Admin extends Component {
 
   // fills in animal name for unapproved animals.
   getAnimalName = (id) => {
-    for(let animal of this.props.animals){
-      if(animal.id === id) {
+    for (let animal of this.props.animals) {
+      if (animal.id === id) {
         return animal.name
       }
     }
     return id
   }
 
+  //getUserName = (id) =>{}
+
   render() {
     return (
       <div>
         <h2><u>New Users</u></h2>
         <Grid container spacing={6} justify={'space-around'}>
-          {this.props.users.map(user =>
+          {this.props.users[0] ? this.props.users.map(user =>
             <Grid item md={6}>
 
               Name: {user.name} <br />
@@ -65,27 +67,36 @@ class Admin extends Component {
                 Accept
                 </Button>
 
-            </Grid>)}
+            </Grid>)
+            :
+            <Grid item md={12}>
+              No New Users
+            </Grid>}
         </Grid>
         <h2><u>New Trophies</u></h2>
         <Grid container spacing={6} justify={'space-around'}>
-          {this.props.trophies.map((trophy) =>{
+          {this.props.trophies[0] ? this.props.trophies.map((trophy) => {
             let animalName = this.getAnimalName(trophy.animals_id)
             return (
-            <Grid item md={6}>
-              Name: {animalName} <br />
-              Weight: {trophy.weight} lbs <br />
-              Points: {trophy.points} <br />
-              Wolfe Score: {trophy.buck_score} <br /> <br />
-              <Button variant='contained' color='secondary'
-                onClick={() => this.handleTrophyApprove(false, trophy.id, animalName)}>
-                Decline
+              <Grid item md={6}>
+                Name: {animalName} <br />
+                Weight: {trophy.weight} lbs <br />
+                Points: {trophy.points} <br />
+                Wolfe Score: {trophy.buck_score} <br /> <br />
+                <Button variant='contained' color='secondary'
+                  onClick={() => this.handleTrophyApprove(false, trophy.id, animalName)}>
+                  Decline
                 </Button> <span> &nbsp; &nbsp; &nbsp; </span>
-              <Button variant='contained' color='primary'
-                onClick={() => this.handleTrophyApprove(true, trophy.id, animalName)}>
-                Accept
+                <Button variant='contained' color='primary'
+                  onClick={() => this.handleTrophyApprove(true, trophy.id, animalName)}>
+                  Accept
                 </Button>
-          </Grid>)})}
+              </Grid>)
+          })
+        :
+        <Grid item md={12}>
+          No New Trophies
+        </Grid>}
         </Grid>
       </div>
     );

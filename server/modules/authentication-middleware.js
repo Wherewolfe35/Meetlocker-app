@@ -10,4 +10,13 @@ const rejectUnauthenticated = (req, res, next) => {
   }
 };
 
-module.exports = { rejectUnauthenticated };
+const rejectUnapproved  = (req, res, next) => {
+  //check if user has been approved
+  if (req.user.is_approved){
+    next();
+  } else {
+    res.sendStatus(423);
+  }
+}
+
+module.exports = { rejectUnauthenticated, rejectUnapproved };

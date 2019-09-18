@@ -61,7 +61,6 @@ class LoginPage extends Component {
                   value={this.state.password}
                   onChange={this.handleInputChangeFor('password')}
                 />
-                <p>Password must be at least 6 characters long</p>
               </label>
             </div>
             <div>

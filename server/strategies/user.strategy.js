@@ -38,6 +38,7 @@ passport.use('local', new LocalStrategy((username, password, done) => {
         const user = result && result.rows && result.rows[0];
         if (user && encryptLib.comparePassword(password, user.password)) {
           // All good! Passwords match!
+          // user has been approved and may view the app
           // done takes an error (null in this case) and a user
           done(null, user);
         } else {

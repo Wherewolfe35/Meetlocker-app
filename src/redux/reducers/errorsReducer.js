@@ -12,6 +12,8 @@ const loginMessage = (state = '', action) => {
       return 'Oops! The username and password didn\'t match. Try again!';
     case 'LOGIN_FAILED_NO_CODE':
       return 'Oops! Something went wrong! Is the server running?';
+    case 'LOGIN_NOT_APPROVED':
+      return 'Thank you for your eagerness to join the Meetlocker.  Please wait for the Meetlocker admin approval.';
     default:
       return '';
   }

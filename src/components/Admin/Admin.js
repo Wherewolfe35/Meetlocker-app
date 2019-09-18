@@ -8,6 +8,7 @@ class Admin extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'GET_UNAPPROVED' });
     this.props.dispatch({ type: 'GET_ANIMALS' });
+    this.props.dispatch({ type: 'GET_USERS' });
   }
 
   //sends update or delete dispatch for unapproved users
@@ -46,7 +47,14 @@ class Admin extends Component {
     return id
   }
 
-  //getUserName = (id) =>{}
+  // fills in user name for unapproved trophies
+  getUserName = (id) =>{
+    for (let user of this.props.userList) {
+      if (user.id === id){
+        return user.name;
+      }
+    }
+  }
 
   render() {
     return (
@@ -76,10 +84,12 @@ class Admin extends Component {
         <h2><u>New Trophies</u></h2>
         <Grid container spacing={6} justify={'space-around'}>
           {this.props.trophies[0] ? this.props.trophies.map((trophy) => {
-            let animalName = this.getAnimalName(trophy.animals_id)
+            let animalName = this.getAnimalName(trophy.animals_id);
+            let userName = this.getUserName(trophy.user_id)
             return (
               <Grid item md={6}>
-                Name: {animalName} <br />
+                Hunter: {userName} <br />
+                Animal: {animalName} <br />
                 Weight: {trophy.weight} lbs <br />
                 Points: {trophy.points} <br />
                 Wolfe Score: {trophy.buck_score} <br /> <br />
@@ -107,6 +117,7 @@ const mapStateToProps = (state) => ({
   users: state.admin.userList,
   trophies: state.admin.trophyList,
   animals: state.leaderboard.animalList,
+  userList: state.admin.fullUserList,
 })
 
 export default connect(mapStateToProps)(Admin);

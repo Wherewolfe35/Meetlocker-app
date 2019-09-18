@@ -58,6 +58,15 @@ function* approveTrophy(action) {
   }
 }
 
+function* getUsers(){
+  try {
+    let response = yield axios.get('/api/admin/userList', config);
+    yield put({ type: 'SET_USERLIST', payload: response.data})
+  } catch (error) {
+    console.log('error in getUsers', error);
+  }
+}
+
 //rootSaga
 function* adminSaga() {
   yield takeEvery('GET_UNAPPROVED', getAdmin);
@@ -65,6 +74,7 @@ function* adminSaga() {
   yield takeEvery('APPROVE_USER', approveUser);
   yield takeEvery('DISAPPROVE_TROPHY', disapproveTrophy);
   yield takeEvery('APPROVE_TROPHY', approveTrophy);
+  yield takeEvery('GET_USERS', getUsers);
 }
 
 export default adminSaga;

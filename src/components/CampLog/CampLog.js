@@ -182,6 +182,8 @@ const CampLog = (props) => {
                       </span>
                     </p>
                   </div>)
+              } else {
+                return false;
               }
             })}
           </div>

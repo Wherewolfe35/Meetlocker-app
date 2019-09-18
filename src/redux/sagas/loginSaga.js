@@ -16,17 +16,21 @@ function* loginUser(action) {
     // the config includes credentials which
     // allow the server session to recognize the user
     yield axios.post('/api/user/login', action.payload, config);
-    
+
     // after the user has logged in
     // get the user information from the server
-    yield put({type: 'FETCH_USER'});
+    yield put({ type: 'FETCH_USER' });
   } catch (error) {
-    console.log('Error with user login:', error);
+    console.log('error in Login:', error);
     if (error.response.status === 401) {
+      console.log(error)
       // The 401 is the error status sent from passport
       // if user isn't in the database or
       // if the username and password don't match in the database
       yield put({ type: 'LOGIN_FAILED' });
+    } else if (error.response.status === 423) {
+      // 423 if user has registered, but not been approved by an admin yet
+      yield put({ type: 'LOGIN_NOT_APPROVED' })
     } else {
       // Got an error that wasn't a 401
       // Could be anything, but most common cause is the server is not started

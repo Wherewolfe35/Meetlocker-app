@@ -33,6 +33,8 @@ class Leaderboard extends Component {
                     } else {
                       return (<th key={key}>{key}</th>)
                     }
+                  } else {
+                    return false;
                   }
                 })
                 }

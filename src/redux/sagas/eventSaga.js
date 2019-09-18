@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // worker saga: obtains all events from database and sends it to the reducer
 function* getEvents() {
-  console.log('hello from getEvents');
   try {
     const config = {
       headers: { 'Content-Type': 'application/json' },

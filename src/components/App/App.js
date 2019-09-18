@@ -21,6 +21,7 @@ import Admin from '../Admin/Admin';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import EventForm from "../EventForm/EventForm";
 import AnimalForm from '../AnimalForm/AnimalForm';
+import MyProfile from '../MyProfile/MyProfile';
 
 const theme = createMuiTheme({
   palette: {
@@ -100,6 +101,11 @@ class App extends Component {
                 exact
                 path="/AddAnimal"
                 component={AnimalForm}
+              />
+              <ProtectedRoute
+                exact
+                path="/Profile"
+                component={MyProfile}
               />
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />

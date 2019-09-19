@@ -23,7 +23,7 @@ td, th {
 
 .addAnimalBtn {
   display: flex;
-  position: fixed;
   bottom: 5px;
   margin-left: 35%;
+  position: fixed;
 }

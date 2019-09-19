@@ -7,6 +7,7 @@ import log from "./logReducer";
 import comment from "./commentReducer"
 import leaderboard from "./leaderboardReducer";
 import admin from "./adminReducer";
+import image from "./imageReducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   comment, // contains the comments for a specific log as well as a new comment
   leaderboard, //contains the animals data for all users
   admin, //contains all unapproved users and trophies
+  image, //contains image data
 });
 
 export default rootReducer;

@@ -24,7 +24,7 @@ function* fetchUser() {
   }
 }
 
-//requests server to update specified user information
+//workerSaga: requests server to update specified user information
 function* editUser(action) {
   try {
     const config = {
@@ -40,9 +40,27 @@ function* editUser(action) {
   }
 }
 
+//workerSaga: submits image data to server to add to AWS
+function* addImage(action) {
+  try {
+    let response = yield axios.post('/api/image', action.payload)
+    yield put({ type: 'SET_URI', payload: response.uri})
+      .then((response) => {
+        console.log('Successful POST', response);
+        this.setState({
+          processing: false,
+          uploaded_uri: response.uri
+        });
+      })
+  } catch (error) {
+    console.log('error in addImage', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('EDIT_USER', editUser);
+  yield takeLatest('ADD_IMAGE', addImage);
 }
 
 export default userSaga;

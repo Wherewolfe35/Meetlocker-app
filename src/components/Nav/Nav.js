@@ -22,20 +22,31 @@ const Nav = (props) => {
   const ITEM_HEIGHT = 48;
   let title = props.location.pathname.slice(1);
 
-  let componentList = ['Calendar', 'Leaderboard', 'CampLog', 'Profile'];
-  let navItemList = <>{componentList.map(component => <MenuItem key={component}>
-    <Link className="nav-link" to={'/' + component} onClick={handleClose}>
-      {component}
-    </Link>
-  </MenuItem>
-    )} < MenuItem >
-      <LogOutButton className="nav-link" />
-    </MenuItem> </>
-  let adminItem = <MenuItem>
-    <Link className="nav-link" to="/Admin" onClick={handleClose}>
-      Admin
-            </Link>
-  </MenuItem>;
+  let componentList = ['Calendar', 'Leaderboard', 'CampLog', 'Profile', 'Admin', <MenuItem key="logout"> <LogOutButton className="nav-link" /> </MenuItem>];
+  let navItemList = <>{componentList.map((component) => {
+    if (component === 'Admin') {
+      if (props.state.user.isAdmin) {
+        return <MenuItem key={component}>
+          <Link className="nav-link" to={'/' + component} onClick={handleClose}>
+            {component}
+          </Link>
+        </MenuItem>;
+      } else {
+        return false;
+      }
+    } else if (typeof (component) !== 'string') {
+      return component;
+    } else {
+      return (
+        <MenuItem key={component}>
+          <Link className="nav-link" to={'/' + component} onClick={handleClose}>
+            {component}
+          </Link>
+        </MenuItem>
+      )
+    }})} </>;
+  
+  let loggedOutList = [<MenuItem className="nav-link" onClick={handleClose}>MeatLocker</MenuItem>];
 
   return (
     <div className="nav">
@@ -48,7 +59,7 @@ const Nav = (props) => {
           aria-controls="long-menu"
           aria-haspopup="true"
           onClick={handleNav}>
-          <MoreVert />
+          <MoreVert color="secondary" />
         </IconButton>
         <Menu
           id="long-menu"
@@ -64,8 +75,7 @@ const Nav = (props) => {
           }}
         > {props.state.user.id ? navItemList
           :
-          <MenuItem className="nav-link" onClick={handleClose}>MeatLocker</MenuItem>}
-          {props.state.user.isAdmin && adminItem}
+          loggedOutList}
         </Menu>
       </div>
     </div>

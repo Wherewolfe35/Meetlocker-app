@@ -62,7 +62,7 @@ class Admin extends Component {
         <h2><u>New Users</u></h2>
         <Grid container spacing={6} justify={'space-around'}>
           {this.props.users[0] ? this.props.users.map(user =>
-            <Grid item md={6}>
+            <Grid item md={6} key={user.id}>
 
               Name: {user.name} <br />
               E-mail: {user.username} <br /> <br />
@@ -87,7 +87,7 @@ class Admin extends Component {
             let animalName = this.getAnimalName(trophy.animals_id);
             let userName = this.getUserName(trophy.user_id)
             return (
-              <Grid item md={6}>
+              <Grid item md={6} key={trophy.id}>
                 Hunter: {userName} <br />
                 Animal: {animalName} <br />
                 Weight: {trophy.weight} lbs <br />

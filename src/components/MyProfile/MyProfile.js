@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 import { TextField, Button } from "@material-ui/core";
 import { Check as CheckIcon, Clear as ClearIcon } from '@material-ui/icons';
@@ -97,6 +98,7 @@ class MyProfile extends Component {
             </table>
           </div>
         }
+        {/* <ImageUpload /> */}
       </div>
     );
   }

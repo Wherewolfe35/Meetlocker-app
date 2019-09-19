@@ -30,7 +30,7 @@ class Calendar extends Component {
         </header>
         <h2><u>Calendar of Events</u></h2>
         <ul>
-          {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date}
+          {this.props.state.events.eventList.map(event => <li key={event.id}>{event.title} {event.start_date}-{event.end_date}
             {event.user_id === this.props.state.user.id && <DeleteForeverOutlined size="small" onClick={() => this.deleteEvent(event.id)}>Delete</DeleteForeverOutlined>}
           </li>)}
         </ul>
@@ -39,6 +39,7 @@ class Calendar extends Component {
           onClick={() => this.props.history.push('/EventForm')}>Add Event
         </Button>
         </div>
+        <img src='MeatLockerLogo.jpg' alt='Buck fighting a bear with bacon on the side' />
       </div>
     );
   }

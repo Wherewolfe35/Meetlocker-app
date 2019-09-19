@@ -72,4 +72,8 @@ class ImageUploader extends Component {
   }
 }
 
-export default connect()(ImageUploader);
+const mapStateToProps = (state) => ({
+  image: state.image,
+})
+
+export default connect(mapStateToProps)(ImageUploader);

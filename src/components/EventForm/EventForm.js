@@ -10,8 +10,8 @@ import {
 } from '@material-ui/pickers';
 
 const EventForm = (props) => {
-  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date('2019-09-10T21:11:54'));
-  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date('2019-09-11T21:11:54'));
+  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
 
   //sets start date
   function handleDateChange(date, event) {
@@ -30,10 +30,12 @@ const EventForm = (props) => {
   //request to add event to database if all fields are filled out
   function handleSubmit(event) {
     event.preventDefault();
-    if(props.events.title && props.events.startDate && props.events.endDate){
+    if(props.events.title && props.events.startDate && props.events.endDate 
+      && props.events.endDate >= props.events.startDate){
     props.dispatch({ type: 'ADD_EVENT', payload: props.events });
-    } else (alert('Please fill out all fields'))
+    } else (alert('Please fill out all fields and make sure then end date is after the start date'))
   }
+
   return (
     <div>{props.errors.eventFormMessage && alert(props.errors.eventFormMessage)}
       <form onSubmit={(event) => handleSubmit(event)}>

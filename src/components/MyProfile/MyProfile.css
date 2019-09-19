@@ -1,0 +1,17 @@
+.profileTable {
+  width: 99%;
+  overflow-x: scroll;
+  margin-left: 2px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+.profileForm {
+  margin-left: 2px;
+}
+
+.profileSubmitBtn {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}

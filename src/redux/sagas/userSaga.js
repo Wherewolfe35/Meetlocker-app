@@ -24,8 +24,25 @@ function* fetchUser() {
   }
 }
 
+//requests server to update specified user information
+function* editUser(action) {
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    yield axios.put('/api/user', action.payload, config);
+    yield put({ type: 'FETCH_USER' });
+    yield put({ type: 'GET_USER_TROPHIES' });
+    yield put({ type: 'GET_ANIMALS' });
+  } catch (error) {
+    console.log('error in editUser', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('EDIT_USER', editUser);
 }
 
 export default userSaga;

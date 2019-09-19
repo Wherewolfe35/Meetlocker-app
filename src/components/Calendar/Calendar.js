@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from "@material-ui/core";
+import { DeleteForeverOutlined } from "@material-ui/icons";
 
 import "./Calendar.css";
 
@@ -30,7 +31,7 @@ class Calendar extends Component {
         <h2><u>Calendar of Events</u></h2>
         <ul>
           {this.props.state.events.eventList.map(event => <li>{event.title} {event.start_date}-{event.end_date}
-            {event.user_id === this.props.state.user.id && <button onClick={() => this.deleteEvent(event.id)}>Delete</button>}
+            {event.user_id === this.props.state.user.id && <DeleteForeverOutlined size="small" onClick={() => this.deleteEvent(event.id)}>Delete</DeleteForeverOutlined>}
           </li>)}
         </ul>
         <div className='eventBtn'>

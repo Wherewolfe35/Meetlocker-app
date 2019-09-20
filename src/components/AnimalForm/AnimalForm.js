@@ -135,12 +135,38 @@ class AnimalForm extends Component {
     this.setState({ ...this.state, newAnimal: { ...this.state.newAnimal, score: wolfeScore } })
   }
 
+  //dummy form data
+  demoData = () => {
+    this.setState({
+      newAnimal: {
+        id: '1',
+        weight: '174',
+        points: '6',
+        score: 0
+      },
+      measurements: {
+        leftBaseCirc: 3.1,
+        rightBaseCirc: 3.0,
+        insideSpread: 15.8,
+        leftPoints: 3,
+        rightPoints: 3,
+        leftPoint1: 4.7,
+        leftPoint2: 5.5,
+        leftPoint3: 6.4,
+        rightPoint1: 4.8,
+        rightPoint2: 5.9,
+        rightPoint3: 6.7,
+      },
+    })
+  }
+
   render() {
     let rightMeasurements = this.pointLoop('right');
     let leftMeasurements = this.pointLoop('left');
 
 
     return (<div>
+      <Button className="demoBtn" onClick={this.demoData}> &nbsp; </Button>
       <Grid container spacing={5} direction="column" justify="center" alignItems="center">
         <Grid item xs={8}>
           <FormControl required>

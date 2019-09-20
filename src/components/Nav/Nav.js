@@ -44,22 +44,22 @@ const Nav = (props) => {
           </Link>
         </MenuItem>
       )
-    }})} </>;
-  
+    }
+  })} </>;
+
   let loggedOutList = [<MenuItem className="nav-link" onClick={handleClose}>MeatLocker</MenuItem>];
 
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">{props.state.user.id ? title : 'Login/Register'}</h2>
-      </Link>
+      <img className="navLogo" src='MeatLockerLogo.jpg' alt='Buck fighting a bear with bacon on the side' />
+      <h2 className="nav-title">{props.state.user.id ? title : 'Login/Register'}</h2>
       <div className="nav-right">
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
           onClick={handleNav}>
-          <MoreVert color="secondary" />
+          <MoreVert color="primary" />
         </IconButton>
         <Menu
           id="long-menu"

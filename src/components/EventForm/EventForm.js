@@ -34,6 +34,8 @@ const EventForm = (props) => {
     if(props.events.title && props.events.startDate && props.events.endDate 
       && props.events.endDate >= props.events.startDate){
     props.dispatch({ type: 'ADD_EVENT', payload: props.events });
+    swal('Thank you for your event!', {icon: 'success'});
+    props.history.push('/');
     } else (swal('Please fill out all fields and make sure then end date is after the start date'))
   }
 

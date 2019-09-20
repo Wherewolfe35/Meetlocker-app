@@ -39,7 +39,6 @@ class Calendar extends Component {
           onClick={() => this.props.history.push('/EventForm')}>Add Event
         </Button>
         </div>
-        <img src='MeatLockerLogo.jpg' alt='Buck fighting a bear with bacon on the side' />
       </div>
     );
   }

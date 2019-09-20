@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT "logs".id, "logs".post, "logs".user_id, "logs".date, "users"."name" FROM "logs"
     JOIN "users" ON "users".id = "logs".user_id
-    ORDER BY "logs".date;`;
+    ORDER BY "logs".date desc;`;
   pool.query(queryText)
     .then((result) => {
       res.send(result.rows);

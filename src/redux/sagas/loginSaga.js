@@ -23,7 +23,6 @@ function* loginUser(action) {
   } catch (error) {
     console.log('error in Login:', error);
     if (error.response.status === 401) {
-      console.log(error)
       // The 401 is the error status sent from passport
       // if user isn't in the database or
       // if the username and password don't match in the database

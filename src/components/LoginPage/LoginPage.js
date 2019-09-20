@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import swal from '@sweetalert/with-react'
 
 class LoginPage extends Component {
   state = {
@@ -36,7 +37,7 @@ class LoginPage extends Component {
     return (
       <div className="login">
         {this.props.errors.loginMessage && (
-          alert(this.props.errors.loginMessage)
+          swal(this.props.errors.loginMessage)
         )}
         <center className='loginForm'>
           <form onSubmit={this.login}>

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import ImageUpload from "../ImageUpload/ImageUpload";
+// import ImageUpload from "../ImageUpload/ImageUpload";
 
 import { TextField, Button } from "@material-ui/core";
 import { Check as CheckIcon, Clear as ClearIcon } from '@material-ui/icons';
+import swal from '@sweetalert/with-react';
 
 import "./MyProfile.css";
 
 class MyProfile extends Component {
   state = {
-    username: '',
-    name: ''
+   
   }
   componentDidMount() {
     this.props.dispatch({ type: 'GET_USER_TROPHIES' });
@@ -32,21 +32,21 @@ class MyProfile extends Component {
   }
 
   profileSubmit = () => {
-    if (window.confirm(`Are you sure you want to make changes to your profile name/username?`)) {
-      if (this.state.username && this.state.name) {
-        this.props.dispatch({ type: 'EDIT_USER', payload: this.state });
-      } else if (this.state.username) {
-        this.props.dispatch({ type: 'EDIT_USER', payload: this.state });
-      } else if (this.state.name) {
-        this.props.dispatch({ type: 'EDIT_USER', payload: this.state });
+    swal(`Are you sure you want to make changes to your profile name/username?`,{buttons: true})
+    .then((toAccept) => {
+      if(toAccept) {
+        if (this.state.username || this.state.name) {
+          this.props.dispatch({ type: 'EDIT_USER', payload: this.state });
+          swal('Changes accepted', {icon: 'success'})
+        } else {
+          swal('You have not made any changes to your username or name.');
+        }
       } else {
-        alert('You have not made any changes to your username or name.');
+        swal('No changes made.');
       }
-      this.setState({ name: '', username: '' });
-    }
+    }); 
   }
 
-  state = {}
   render() {
     return (
       <div>

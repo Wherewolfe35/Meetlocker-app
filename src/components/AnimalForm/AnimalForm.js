@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import { FormControl, InputLabel, Select, TextField, Button, InputAdornment, Grid } from '@material-ui/core';
+import swal from '@sweetalert/with-react';
 
 class AnimalForm extends Component {
   state = {
@@ -82,25 +83,32 @@ class AnimalForm extends Component {
 
   animalSubmit = () => {
     if (!this.state.newAnimal.score && this.state.newAnimal.id === '1') {
-      alert('Please submit a score for your Buck!');
+      swal('Please submit a score for your Buck!');
     } else if (!this.state.newAnimal.id) {
-      alert('Please select an animal.');
+      swal('Please select an animal.');
     } else if (+(this.state.newAnimal.weight) > 600) {
-      alert(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
+      swal(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
     } else if (+(this.state.newAnimal.points) > 39) {
-      alert(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
+      swal(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
     } else {
-      if (window.confirm(`Are you sure all of this data is correct? \n Name: ${this.state.animalName} 
+      swal({
+        title: `Are you sure all of this data is correct?`, text: `Name: ${this.state.animalName} 
       Weight: ${this.state.newAnimal.weight} lbs 
       Points: ${this.state.newAnimal.points} 
-      Score: ${this.state.newAnimal.score}`)) {
-        alert('Thank you for your submission, an Admin will review your hunt before officially being accepted to the leaderboard');
-        this.props.dispatch({ type: 'ADD_ANIMAL', payload: this.state.newAnimal });
-        this.setState({
-          newAnimal: { id: this.state.newAnimal.id, weight: '', points: '', score: '' },
-          measurements: { leftBaseCirc: 0, rightBaseCirc: 0, insideSpread: 0, leftPoints: 0, rightPoints: 0, },
-        })
-      }
+      Score: ${this.state.newAnimal.score}`, buttons: true
+      })
+        .then((toAccept) => {
+          if (toAccept) {
+            swal('Thank you for your submission, an Admin will review your hunt before officially being accepted to the leaderboard');
+            this.props.dispatch({ type: 'ADD_ANIMAL', payload: this.state.newAnimal });
+            this.setState({
+              newAnimal: { id: this.state.newAnimal.id, weight: '', points: '', score: '' },
+              measurements: { leftBaseCirc: 0, rightBaseCirc: 0, insideSpread: 0, leftPoints: 0, rightPoints: 0, },
+            });
+          } else {
+            return false;
+          };
+        });
     }
   }
 
@@ -185,7 +193,7 @@ class AnimalForm extends Component {
             Calculate Score
           </Button> <br /> <br />
         </>}
-        <Button variant="contained" color="secondary" onClick={this.animalSubmit}>Submit Animal</Button> <br/>
+        <Button variant="contained" color="secondary" onClick={this.animalSubmit}>Submit Animal</Button> <br />
       </Grid>
     </div>
     )

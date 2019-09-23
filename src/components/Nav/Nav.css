@@ -1,16 +1,17 @@
 .nav-title {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 700;
     display: inline-block;
-    color: black;
+    color: #05630d;
     padding-left: 10px;
     margin-top: 5px;
 }
 
 .nav {
   overflow: visible;
-  background-color:rgba(5, 99, 13, 0.7);
-  max-height: 40px;
+  /* background-color:rgba(5, 99, 13, 0.7); */
+  background-color: white;
+  max-height: 45px;
 }
 
 .nav-link {
@@ -36,4 +37,9 @@
 
 .nav-right {
   float: right;
+}
+
+.navLogo {
+  max-width: 30px;
+  max-height: 30px;
 }

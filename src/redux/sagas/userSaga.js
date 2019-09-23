@@ -11,6 +11,7 @@ function* fetchUser() {
 
     // the config includes credentials which
     // allow the server session to recognize the user
+    // useful with cookies, mostly on post, put routes. 
     // If a user is logged in, this will return their information
     // from the server session (req.user)
     const response = yield axios.get('/api/user', config);
@@ -24,7 +25,7 @@ function* fetchUser() {
   }
 }
 
-//requests server to update specified user information
+//workerSaga: requests server to update specified user information
 function* editUser(action) {
   try {
     const config = {
@@ -40,9 +41,27 @@ function* editUser(action) {
   }
 }
 
+//workerSaga: submits image data to server to add to AWS
+function* addImage(action) {
+  try {
+    let response = yield axios.post('/api/image', action.payload)
+    yield put({ type: 'SET_URI', payload: response.uri})
+      .then((response) => {
+        console.log('Successful POST', response);
+        this.setState({
+          processing: false,
+          uploaded_uri: response.uri
+        });
+      })
+  } catch (error) {
+    console.log('error in addImage', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('EDIT_USER', editUser);
+  yield takeLatest('ADD_IMAGE', addImage);
 }
 
 export default userSaga;

@@ -2,6 +2,7 @@ import 'date-fns';
 import React from 'react';
 import { connect } from "react-redux";
 import { Grid, Button, TextField } from '@material-ui/core';
+import swal from '@sweetalert/with-react';
 
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -33,11 +34,13 @@ const EventForm = (props) => {
     if(props.events.title && props.events.startDate && props.events.endDate 
       && props.events.endDate >= props.events.startDate){
     props.dispatch({ type: 'ADD_EVENT', payload: props.events });
-    } else (alert('Please fill out all fields and make sure then end date is after the start date'))
+    swal('Thank you for your event!', {icon: 'success'});
+    props.history.push('/');
+    } else (swal('Please fill out all fields and make sure then end date is after the start date'))
   }
 
   return (
-    <div>{props.errors.eventFormMessage && alert(props.errors.eventFormMessage)}
+    <div>{props.errors.eventFormMessage && swal(props.errors.eventFormMessage)}
       <form onSubmit={(event) => handleSubmit(event)}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">

@@ -8,7 +8,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker, } from '@material-ui/picke
 import { AddCommentTwoTone, Edit as EditIcon, DeleteForeverOutlined, Block as BlockIcon } from '@material-ui/icons';
 
 const CampLog = (props) => {
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2019-09-11T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [comment, setComment] = React.useState(false);
   const [commentId, setCommentId] = React.useState(0);
   const [editMode, setEditMode] = React.useState(false);

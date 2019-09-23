@@ -1,6 +1,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0px;
+    font-size: 1.2rem;
 }
 
 .alert {
@@ -76,4 +77,9 @@ label p {
 
 .declineButton {
     background-color: #ff4545
+}
+
+.demoBtn {
+    min-width: 100%;
+    min-height: 20px;
 }

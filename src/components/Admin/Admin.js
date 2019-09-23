@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Grid, Button } from "@material-ui/core";
 
+import swal from "@sweetalert/with-react";
+
 class Admin extends Component {
   state = {}
 
@@ -14,26 +16,62 @@ class Admin extends Component {
   //sends update or delete dispatch for unapproved users
   handleUserApprove = (approve, id, name) => {
     if (!approve) {
-      if (window.confirm(`Are you sure you want to remove ${name}?`)) {
-        this.props.dispatch({ type: 'DISAPPROVE_USER', payload: id })
-      }
+      swal({
+        text: `Are you sure you want to remove ${name}?`,
+        icon: 'warning', buttons: true, dangermode: true
+      })
+        .then((toDelete) => {
+          if (toDelete) {
+            this.props.dispatch({ type: 'DISAPPROVE_USER', payload: id })
+            swal('User Removed', { icon: 'success' });
+          } else {
+            swal('User remains undecided.');
+          }
+        });
     } else {
-      if (window.confirm(`You are about to accept ${name}.`)) {
-        this.props.dispatch({ type: 'APPROVE_USER', payload: id })
-      }
+      swal({
+        text: `You are about to accept ${name}.`,
+        icon: 'warning', buttons: true, dangermode: true
+      })
+        .then((toAccept) => {
+          if (toAccept) {
+            this.props.dispatch({ type: 'APPROVE_USER', payload: id });
+            swal(`${name} has been approved!`, { icon: 'success' });
+          } else {
+            swal('User remains undecided.');
+          }
+        });
     }
   }
 
   //sends update or delete dispatch for unapproved trophies
   handleTrophyApprove = (approve, id, animal) => {
     if (!approve) {
-      if (window.confirm(`Are you sure you want to remove this trophy ${animal}?`)) {
-        this.props.dispatch({ type: 'DISAPPROVE_TROPHY', payload: id })
-      }
+      swal({
+        text: `Are you sure you want to remove this trophy ${animal}?`,
+        icon: 'warning', buttons: true, dangermode: true
+      })
+        .then((toDelete) => {
+          if (toDelete) {
+            this.props.dispatch({ type: 'DISAPPROVE_TROPHY', payload: id})
+            swal('Trophy Removed', { icon: 'success' });
+          } else {
+            swal('Trophy remains undecided.');
+          }
+        });
     } else {
-      if (window.confirm(`You are about to accept this trophy ${animal}.`)) {
-        this.props.dispatch({ type: 'APPROVE_TROPHY', payload: id })
-      }
+      swal({
+        text: `You are about to accept this trophy ${animal}.`,
+        icon: 'warning', buttons: true, dangermode: true
+      })
+        .then((toAccept) => {
+          if (toAccept) {
+            this.props.dispatch({ type: 'APPROVE_TROPHY', payload: id });
+            swal('Trophy added to the Hall of Fame!', { icon: 'success' });
+          } else {
+            swal('Trophy remains undecided.');
+          }
+        })
     }
   }
 
@@ -48,9 +86,9 @@ class Admin extends Component {
   }
 
   // fills in user name for unapproved trophies
-  getUserName = (id) =>{
+  getUserName = (id) => {
     for (let user of this.props.userList) {
-      if (user.id === id){
+      if (user.id === id) {
         return user.name;
       }
     }
@@ -62,7 +100,7 @@ class Admin extends Component {
         <h2><u>New Users</u></h2>
         <Grid container spacing={6} justify={'space-around'}>
           {this.props.users[0] ? this.props.users.map(user =>
-            <Grid item md={6}>
+            <Grid item md={6} key={user.id}>
 
               Name: {user.name} <br />
               E-mail: {user.username} <br /> <br />
@@ -87,7 +125,7 @@ class Admin extends Component {
             let animalName = this.getAnimalName(trophy.animals_id);
             let userName = this.getUserName(trophy.user_id)
             return (
-              <Grid item md={6}>
+              <Grid item md={6} key={trophy.id}>
                 Hunter: {userName} <br />
                 Animal: {animalName} <br />
                 Weight: {trophy.weight} lbs <br />
@@ -103,9 +141,9 @@ class Admin extends Component {
                 </Button>
               </Grid>)
           })
-        :
-        <Grid item md={12}>
-          No New Trophies
+            :
+            <Grid item md={12}>
+              No New Trophies
         </Grid>}
         </Grid>
       </div>

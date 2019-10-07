@@ -5,8 +5,10 @@ body {
 }
 
 .alert {
-    background-color: #ff4545;
+    color: #ff4545;
     margin: 50px;
+    margin-top: 0;
+    text-align: center;
 }
 
 .loginForm {

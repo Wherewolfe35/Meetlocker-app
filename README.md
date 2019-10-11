@@ -54,5 +54,6 @@ Thanks to [Prime Digital Academy](www.primeacademy.io) in Minneapolis who equipp
 
 Aaron Wolfe - If you have suggestions or issues, please email me at 3wolfeaaron5@gmail.com
 
-Project Link: (https://github.com/Wherewolfe35/meetlocker-app)(https://still-tundra-03699.herokuapp.com)
+Project Link: [Github](https://github.com/Wherewolfe35/meetlocker-app)
+[Heroku](https://still-tundra-03699.herokuapp.com)
 

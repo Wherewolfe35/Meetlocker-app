@@ -27,17 +27,19 @@ class LoginPage extends Component {
   } // end login
 
   handleInputChangeFor = propertyName => (event) => {
+    if(!this.state){
+      this.props.dispatch({ type: 'CLEAR_LOGIN_ERROR' });
+    }
     this.setState({
       [propertyName]: event.target.value,
     });
-    this.props.dispatch({ type: 'CLEAR_LOGIN_ERROR' });
   }
 
   render() {
     return (
       <div className="login">
         {this.props.errors.loginMessage && (
-          swal(this.props.errors.loginMessage)
+          <h3 className="alert">{this.props.errors.loginMessage}</h3>
         )}
         <center className='loginForm'>
           <form onSubmit={this.login}>

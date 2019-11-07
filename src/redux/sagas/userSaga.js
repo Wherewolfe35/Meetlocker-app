@@ -58,10 +58,20 @@ function* addImage(action) {
   }
 }
 
+// requests a patch for updated password
+function* editPassword(action) {
+  try {
+    yield axios.patch('/api/user/password', action.payload);
+  } catch (error) {
+    console.log('error in editPassword', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('EDIT_USER', editUser);
   yield takeLatest('ADD_IMAGE', addImage);
+  yield takeLatest('EDIT_PASSWORD', editPassword);
 }
 
 export default userSaga;

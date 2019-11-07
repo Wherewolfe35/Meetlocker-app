@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import swal from '@sweetalert/with-react'
+// import swal from '@sweetalert/with-react';
 
 class LoginPage extends Component {
   state = {

@@ -20,7 +20,24 @@ class Calendar extends Component {
     this.props.dispatch({ type: 'REMOVE_EVENT', payload: id });
   }
 
+  formatDate = (date) => {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('');
+  }
+
   render() {
+
+    let currentDate = this.formatDate(Date());
+
     return (
       <div>
         <header>
@@ -30,13 +47,19 @@ class Calendar extends Component {
         </header>
         <h2><u>Calendar of Events</u></h2>
         <ul>
-          {this.props.state.events.eventList.map(event => <li key={event.id}>{event.title} {event.start_date}-{event.end_date}
-            {event.user_id === this.props.state.user.id && <DeleteForeverOutlined size="small" onClick={() => this.deleteEvent(event.id)}>Delete</DeleteForeverOutlined>}
-          </li>)}
+          {this.props.state.events.eventList.map((event) => {
+            if (this.formatDate(event.end_date) >= currentDate) {
+              return <li key={event.id}>{event.title} {event.start_date}-{event.end_date}
+                {event.user_id === this.props.state.user.id && <DeleteForeverOutlined size="small" onClick={() => this.deleteEvent(event.id)}>Delete</DeleteForeverOutlined>}
+              </li>
+            } else {
+              return false;
+            }
+          })}
         </ul>
         <div className='eventBtn'>
-        <Button variant='contained' color='secondary'
-          onClick={() => this.props.history.push('/EventForm')}>Add Event
+          <Button variant='contained' color='secondary'
+            onClick={() => this.props.history.push('/EventForm')}>Add Event
         </Button>
         </div>
       </div>

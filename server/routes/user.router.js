@@ -46,39 +46,27 @@ router.post('/logout', (req, res) => {
 
 //update database with new user name, username, or both
 router.put('/', rejectUnauthenticated, (req, res) => {
-  let columnNames = Object.keys(req.body);
-  console.log(columnNames);
-  if (columnNames.length === 2) {
-    const queryText = `UPDATE "users" SET "name" = $1, "username" = $2 WHERE "id" = $3;`;
-    pool.query(queryText, [req.body.name, req.body.username, req.user.id])
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch((error) => {
-        console.log('error in user PUT', error);
-      });
-  } else if (columnNames.length === 1) {
-    const queryText = `UPDATE "users" SET ${columnNames[0]} = $1 WHERE "id" = $2;`;
-    if (columnNames[0] === 'name') {
-      pool.query(queryText, [req.body.name, req.user.id])
-        .then(() => {
-          res.sendStatus(200);
-        })
-        .catch((error) => {
-          console.log('error in user PUT', error);
-          res.sendStatus(500);
-        });
-    } else {
-      pool.query(queryText, [req.body.username, req.user.id])
-        .then(() => {
-          res.sendStatus(200);
-        })
-        .catch((error) => {
-          console.log('error in user PUT', error);
-          res.sendStatus(500);
-        });
-    }
-  }
+  const queryText = `UPDATE "users" SET "name" = $1, "username" = $2 WHERE "id" = $3;`;
+  pool.query(queryText, [req.body.name, req.body.username, req.user.id])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('error in user PUT', error);
+    });
+});
+
+//updates database with new password if old password matches
+router.patch('/password', rejectUnauthenticated, (req, res) => {
+  const password = encryptLib.encryptPassword(req.body.newPassword);
+  const queryText = `UPDATE "users" SET "password" = $1 WHERE "id" = $2;`;
+  pool.query(queryText, [password, req.user.id])
+  .then(() => {
+    res.sendStatus(200);
+  })
+  .catch((error) => {
+    console.log('error in password patch', error);
+  });
 });
 
 module.exports = router;

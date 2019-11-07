@@ -49,14 +49,15 @@ class MyProfile extends Component {
   }
 
   passwordSubmit = () => {
-    if (this.state.newPassword === this.state.oldPassword && this.state.newPassword.length >= 6) {
+    if (this.state.newPassword === this.state.newPassword2 && this.state.newPassword.length >= 6) {
       this.props.dispatch({
         type: 'EDIT_PASSWORD', payload: {
           newPassword: this.state.newPassword,
-          oldPassword: this.state.oldPassword
+          username: this.props.user.username
         }
       });
       swal('Password updated', { icon: 'success' });
+      this.setState({newPassword: '', newPassword2: ''});
     } else (
       swal(`I'm sorry, but either your passwords do not match or your new password 
       is not longer than 6 characters.`, { icon: 'warning' })
@@ -64,7 +65,7 @@ class MyProfile extends Component {
   }
 
   passwordCheck = () => {
-    if (this.state.newPassword === this.state.oldPassword) {
+    if (this.state.newPassword === this.state.newPassword2) {
       return <p>Passwords Match!</p>;
     } else {
       return <p>Passwors do not Match!</p>;
@@ -89,17 +90,19 @@ class MyProfile extends Component {
             <Button variant="contained" color="secondary"
               onClick={this.profileSubmit}>Submit Changes</Button>
           </div> <br /> <br />
+          <form>
           <u>New Password:</u> <TextField fullWidth margin="dense" type="password"
             variant="filled" onChange={(event) => { this.textChange(event, 'newPassword') }}
-            value={this.state.name} /> <br /> <br />
-          <u>Old Password:</u> <TextField fullWidth margin="dense" type="password"
-            variant="filled" onChange={(event) => { this.textChange(event, 'oldPassword') }}
-            value={this.state.name} required />
-          {this.state.newPassword && this.state.oldPassword && this.passwordCheck()}
+            value={this.state.newPassword} /> <br /> <br />
+          <u>Rewrite New Password:</u> <TextField fullWidth margin="dense" type="password"
+            variant="filled" onChange={(event) => { this.textChange(event, 'newPassword2') }}
+            value={this.state.newPassword2} /> <br /> <br />
+          {this.state.newPassword && this.state.newPassword2 && this.passwordCheck()}
           <div className="profileSubmitBtn">
             <Button variant="contained" color="secondary"
               onClick={this.passwordSubmit}>Change Password</Button>
           </div> <br />
+          </form>
         </div>
         {this.props.trophyList &&
           <div className="profileTable">

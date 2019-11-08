@@ -41,7 +41,8 @@ CREATE TABLE "trophies" (
 	"points" INT,
 	"buck_score" INT,
 	"user_id" INT NOT NULL,
-	"is_approved" BOOLEAN NOT NULL DEFAULT 'false'
+	"is_approved" BOOLEAN NOT NULL DEFAULT 'false',
+	"year" INT
 ) WITH (
   OIDS=FALSE
 );
@@ -96,3 +97,22 @@ ALTER TABLE "trophies" ADD CONSTRAINT "trophies_fk1" FOREIGN KEY ("user_id") REF
 
 ALTER TABLE "users_hunterClubs" ADD CONSTRAINT "users_hunterClubs_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
 ALTER TABLE "users_hunterClubs" ADD CONSTRAINT "users_hunterClubs_fk1" FOREIGN KEY ("hunterClubs_id") REFERENCES "hunterClubs"("id");
+
+INSERT INTO "public"."hunterClubs"("name") VALUES('Locker Legend') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('Winger Dinger') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('4 by Fur') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('Rodent Rampage') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('50 Kills') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('100 Kills') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('250 Kills') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('50 Points') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('100 Points') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('200 Points') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('1000 Lbs') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('5000 Lbs') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('10000 Lbs') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('1000 Wolfe Score') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('5000 Wolfe Score') RETURNING "id", "name";
+INSERT INTO "public"."hunterClubs"("name") VALUES('10000 Wolfe Score') RETURNING "id", "name";
+
+INSERT INTO "animals" ("name") VALUES ('Buck(not nub)'),('Doe'),('Nubbin buck'),('Turkey'), ('Grouse'), ('Woodcock'),('Duck'),('Coyote'),('Old Grey Squirrel'),('Red Squirrel'),('Rabbits'),('Racoon'),('Crow'),('Beaver'),('Porcupine');

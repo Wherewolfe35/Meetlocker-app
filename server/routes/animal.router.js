@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.post('/', rejectUnauthenticated, (req, res) => {
   let animal = req.body;
-  const queryText = `INSERT INTO "trophies" ("animals_id", "weight", "points", "buck_score", "user_id")
-  Values($1, $2, $3, $4, $5)`;
-  pool.query(queryText, [animal.id, +(animal.weight), +(animal.points), +(animal.score), req.user.id])
+  const queryText = `INSERT INTO "trophies" ("animals_id", "weight", "points", "buck_score", "year", "user_id")
+  Values($1, $2, $3, $4, $5, $6)`;
+  pool.query(queryText, [animal.id, +(animal.weight), +(animal.points), +(animal.score), +(animal.year), req.user.id])
   .then(() => {
     res.sendStatus(201);
   })

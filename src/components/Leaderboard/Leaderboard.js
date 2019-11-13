@@ -22,6 +22,7 @@ class Leaderboard extends Component {
     let keys = this.userKeys(this.props.users[0]);
     return (
       <div>
+        <h2><u>Totals:</u></h2>
         <div className="leaderboard">
           <table>
             <thead>

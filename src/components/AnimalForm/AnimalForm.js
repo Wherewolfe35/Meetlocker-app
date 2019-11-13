@@ -10,6 +10,7 @@ class AnimalForm extends Component {
       id: '',
       weight: '',
       points: '',
+      year: new Date().getFullYear(),
       score: 0
     },
     measurements: {
@@ -53,13 +54,6 @@ class AnimalForm extends Component {
     return pointArray;
   }
 
-  // React.useEffect(function pointInputs() {
-  //   for (let i = 0; i < scoreCalculator.leftPoints; i++) {
-  //     left = [...left, i]
-  //   }
-  //   return left;
-  // }, [scoreCalculator.leftPoints]);
-
   handleScoreChange = (event, propertyName) => {
     this.setState({ ...this.state, measurements: { ...this.state.measurements, [propertyName]: event.target.value } });
   }
@@ -89,12 +83,13 @@ class AnimalForm extends Component {
     } else if (+(this.state.newAnimal.weight) > 600) {
       swal(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
     } else if (+(this.state.newAnimal.points) > 39) {
-      swal(`I think you have mistaken your deer for a horse. \n Weight: ${this.state.newAnimal.weight} lbs`);
+      swal(`What is this? A basketball game? \n Points: ${this.state.newAnimal.points} points`);
     } else {
       swal({
         title: `Are you sure all of this data is correct?`, text: `Name: ${this.state.animalName} 
       Weight: ${this.state.newAnimal.weight} lbs 
       Points: ${this.state.newAnimal.points} 
+      Year: ${this.state.newAnimal.year}
       Score: ${this.state.newAnimal.score}`, buttons: true
       })
         .then((toAccept) => {
@@ -184,6 +179,9 @@ class AnimalForm extends Component {
             </Select>
           </FormControl>
         </Grid>
+        <TextField variant="filled" margin="dense" label="Year" type="number"
+          value={this.state.newAnimal.year}
+          onChange={(event) => this.handleNameChange(event, 'year')} />
         <TextField variant="filled" margin="dense" label="Weight" type="number"
           InputProps={{
             endAdornment: <InputAdornment position="end">Lbs</InputAdornment>,
